@@ -8,9 +8,12 @@ namespace Bytic\Scheduler\Crontab;
  */
 class Crontab
 {
-    use Traits\HasExecutableTrait;
     use Traits\HasCommentBlockTrait;
+    use Traits\HasExecutableTrait;
     use Traits\HasIdentifierTrait;
+    use Traits\HasReaderTrait;
+    use Traits\HasUserTrait;
+    use Traits\HasWriterTrait;
 
     /**
      * Constructor.
