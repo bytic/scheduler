@@ -3,7 +3,6 @@
 namespace Bytic\Scheduler\Crontab\Traits;
 
 use Bytic\Scheduler\Crontab\Cronfile;
-use Bytic\Scheduler\Exception\InvalidIdentifierException;
 
 /**
  * Trait HasReaderTrait
@@ -21,7 +20,7 @@ trait HasReaderTrait
         return new Cronfile(
             $this->readRaw($user),
             $this->getHeaderComment(),
-            $this->getFooterComment(),
+            $this->getFooterComment()
         );
     }
 
