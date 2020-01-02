@@ -18,7 +18,7 @@ trait HasCommentBlockTrait
      */
     public function getBaseComment()
     {
-        if ($this->executable === null) {
+        if ($this->baseComment === null) {
             $this->initBaseComment();
         }
 
@@ -39,21 +39,22 @@ trait HasCommentBlockTrait
     }
 
     /**
-     * Get footer comment block.
-     *
-     * @return string
-     */
-    private function getFooterComment()
-    {
-        return '# End ' . $this->baseComment;
-    }
-    /**
      * Get header comment block.
      *
      * @return string
      */
-    private function getHeaderComment()
+    protected function getHeaderComment()
     {
-        return '# Begin ' . $this->baseComment;
+        return '# Begin ' . $this->getBaseComment() . ' for [' . $this->getIdentifier() . ']';
+    }
+
+    /**
+     * Get footer comment block.
+     *
+     * @return string
+     */
+    protected function getFooterComment()
+    {
+        return '# End ' . $this->getBaseComment() . ' for [' . $this->getIdentifier() . ']';
     }
 }
