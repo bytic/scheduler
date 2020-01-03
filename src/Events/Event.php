@@ -10,6 +10,7 @@ class Event
 {
     use Traits\HasCommand;
     use Traits\HasCronExpression;
+    use Traits\HasDriver;
     use Traits\ManagesFrequencies;
 
     /**

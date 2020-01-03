@@ -3,6 +3,7 @@
 namespace Bytic\Scheduler\Tests;
 
 use PHPUnit\Framework\TestCase;
+use \Mockery as m;
 
 /**
  * Class AbstractTest
@@ -10,4 +11,9 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class AbstractTest extends TestCase
 {
+    public function tearDown()
+    {
+        parent::tearDown();
+        m::close();
+    }
 }

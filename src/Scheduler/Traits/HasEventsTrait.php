@@ -2,6 +2,7 @@
 
 namespace Bytic\Scheduler\Scheduler\Traits;
 
+use Bytic\Scheduler\Events\Event;
 use Bytic\Scheduler\Events\EventAdder;
 use Bytic\Scheduler\Events\EventCollection;
 
@@ -15,8 +16,6 @@ trait HasEventsTrait
      * @var EventCollection
      */
     protected $events;
-
-    protected $eventsByDriver = [];
 
     /**
      * @return EventCollection
@@ -36,7 +35,7 @@ trait HasEventsTrait
     }
 
     /**
-     * @param $event
+     * @param Event $event
      */
     public function addEvent($event)
     {
