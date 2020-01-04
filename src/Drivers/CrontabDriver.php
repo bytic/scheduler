@@ -10,22 +10,48 @@ use Bytic\Scheduler\Events\EventCollection;
  * Class CrontabDriver
  * @package Bytic\Scheduler\Drivers
  */
-class CrontabDriver
+class CrontabDriver extends AbstractDriver
 {
+    protected $crontab;
+
+    /**
+     * CrontabDriver constructor.
+     * @param $crontab
+     */
+    public function __construct()
+    {
+        $this->crontab = new Crontab();
+    }
+
+    /**
+     * @return Crontab
+     */
+    public function getCrontab(): Crontab
+    {
+        return $this->crontab;
+    }
+
+    /**
+     * @param Crontab $crontab
+     */
+    public function setCrontab(Crontab $crontab)
+    {
+        $this->crontab = $crontab;
+    }
+
     /**
      * @param EventCollection $collection
      */
-    public static function publish(EventCollection $collection)
+    public function publish(EventCollection $collection)
     {
-        $crontab = new Crontab();
-        $crontab->write(static::generateContent($collection));
+        $this->crontab->write(static::generateContent($collection));
     }
 
     /**
      * @param EventCollection $collection
      * @return string
      */
-    protected static function generateContent(EventCollection $collection)
+    public function generateContent(EventCollection $collection)
     {
         $content = [];
         foreach ($collection as $event) {
@@ -38,10 +64,10 @@ class CrontabDriver
      * @param Event $event
      * @return string
      */
-    protected static function generateContentForEvent(Event $event)
+    public function generateContentForEvent(Event $event)
     {
         $content = $event->getExpression();
-        $content .= ' ' . $event->getExpression();
+        $content .= ' ' . $event->getCommand();
         return $content;
     }
 }

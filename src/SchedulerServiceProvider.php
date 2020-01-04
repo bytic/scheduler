@@ -2,7 +2,7 @@
 
 namespace Bytic\Scheduler;
 
-use Bytic\Scheduler\Console\RegisterCommand;
+use Bytic\Scheduler\Console\PublishCommand;
 use Nip\Container\ServiceProvider\AbstractSignatureServiceProvider;
 
 /**
@@ -34,7 +34,7 @@ class SchedulerServiceProvider extends AbstractSignatureServiceProvider
 
     protected function registerCommands()
     {
-        $this->commands(RegisterCommand::class);
+        $this->commands(PublishCommand::class);
     }
 
     /**

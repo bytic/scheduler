@@ -10,6 +10,7 @@ use Bytic\Scheduler\Events\EventCollection;
  */
 class Scheduler
 {
+    use Scheduler\Traits\HasDrivers;
     use Scheduler\Traits\HasEventsTrait;
 
     /**
@@ -17,6 +18,5 @@ class Scheduler
      */
     public function __construct()
     {
-        $this->events = new EventCollection();
     }
 }

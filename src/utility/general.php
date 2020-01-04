@@ -5,7 +5,7 @@ use Nip\Container\Container;
 if (!function_exists('scheduler')) {
     /**
      * @param string $connection
-     * @return Connection
+     * @return \Bytic\Scheduler\Scheduler
      */
     function scheduler()
     {
@@ -13,6 +13,6 @@ if (!function_exists('scheduler')) {
             return app('scheduler');
         }
 
-        return Container::getInstance()->get('queue')->connection($connection);
+        return Container::getInstance()->get('scheduler');
     }
 }

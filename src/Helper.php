@@ -25,6 +25,14 @@ class Helper
     }
 
     /**
+     * @param string|null $basePath
+     */
+    public static function setBasePath(string $basePath)
+    {
+        self::$basePath = $basePath;
+    }
+
+    /**
      * @return null|string
      */
     static protected function detectAppPath()

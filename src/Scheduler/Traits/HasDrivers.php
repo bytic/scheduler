@@ -8,11 +8,8 @@ namespace Bytic\Scheduler\Scheduler\Traits;
  */
 trait HasDrivers
 {
-    /**
-     * @return array
-     */
-    public function getDrivers()
+    public function publish()
     {
-        return ['crontab'];
+
     }
 }

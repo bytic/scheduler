@@ -16,7 +16,7 @@ trait HasDriver
      *
      * @var string
      */
-    protected $driver = null;
+    protected $driver = 'internal';
 
     public function using($driver)
     {

@@ -9,10 +9,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ConsumeCommand
+ * Class PublishCommand
  * @package ByTIC\Queue\Console
  */
-class RegisterCommand extends Command
+class PublishCommand extends Command
 {
     protected function configure()
     {
@@ -28,28 +28,12 @@ class RegisterCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $scheduler = scheduler();
-        $file = (new FileDetector($scheduler))->getPath();
-
-        require_once $file;
-
-
-        $consumer = $this->getQueueConsumer($connection);
-        $this->setQueueConsumerOptions($consumer, $input);
-
-        $queues = $this->determineQueues($input);
-        $processor = $this->getProcessor();
-
-        foreach ($queues as $queue) {
-            $queue = $connection->getContext()->createQueue($queue);
-            $consumer->bind($queue, $processor);
-        }
+        $scheduler->register();
 
         $extensions = $this->getLimitsExtensions($input, $output);
-
         $exitStatusExtension = new ExitStatusExtension();
         array_unshift($extensions, $exitStatusExtension);
 
-        $consumer->consume(new ChainExtension($extensions));
         return $exitStatusExtension->getExitStatus();
     }
 

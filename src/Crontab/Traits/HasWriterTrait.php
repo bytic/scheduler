@@ -23,7 +23,7 @@ trait HasWriterTrait
      * @throws InvalidIdentifierException
      * @throws RuntimeException
      */
-    protected function write($content, $user = null)
+    public function write($content, $user = null)
     {
         $cronfile = $this->getCronfile($user);
         $cronfile->updateContent($content);
