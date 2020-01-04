@@ -28,7 +28,7 @@ class PublishCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $scheduler = scheduler();
-        $scheduler->register();
+        $scheduler->publish();
 
         $extensions = $this->getLimitsExtensions($input, $output);
         $exitStatusExtension = new ExitStatusExtension();

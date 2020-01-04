@@ -25,4 +25,9 @@ trait HasCommand
     {
         $this->command = $command;
     }
+
+    public function buildCommand()
+    {
+        return (new CommandBuilder)->buildCommand($this);
+    }
 }

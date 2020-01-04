@@ -3,6 +3,7 @@
 namespace Bytic\Scheduler;
 
 use Bytic\Scheduler\Console\PublishCommand;
+use Bytic\Scheduler\Console\RunEventCommand;
 use Nip\Container\ServiceProvider\AbstractSignatureServiceProvider;
 
 /**
@@ -34,7 +35,10 @@ class SchedulerServiceProvider extends AbstractSignatureServiceProvider
 
     protected function registerCommands()
     {
-        $this->commands(PublishCommand::class);
+        $this->commands(
+            PublishCommand::class,
+            RunEventCommand::class
+        );
     }
 
     /**

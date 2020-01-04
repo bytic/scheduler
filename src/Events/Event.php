@@ -12,6 +12,9 @@ class Event
     use Traits\HasCronExpression;
     use Traits\HasDriver;
     use Traits\HasIdentifier;
+    use Traits\HasNameDescription;
+    use Traits\HasOutput;
+    use Traits\IsExecutable;
     use Traits\ManagesFrequencies;
 
     /**
@@ -21,5 +24,7 @@ class Event
     public function __construct($command)
     {
         $this->setCommand($command);
+
+        $this->output = $this->getDefaultOutput();
     }
 }
