@@ -15,7 +15,6 @@ class DriverManager
     ];
 
     protected static $instances = [
-        'crontab' => CrontabDriver::class
     ];
 
     public static function publish(EventCollection $collection, $driver)
@@ -32,9 +31,18 @@ class DriverManager
     {
         if (!static::$instances[$driver]) {
             $class = static::$list[$driver];
-            static::$instances[$driver] = new $class();
+            static::add( new $class(), $driver);
         }
 
         return static::$instances[$driver];
+    }
+
+    /**
+     * @param $driver
+     * @param $name
+     */
+    public static function add($driver, $name)
+    {
+        static::$instances[$name] = $driver;
     }
 }
