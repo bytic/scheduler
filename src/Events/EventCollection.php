@@ -10,4 +10,16 @@ use Nip\Collections\AbstractCollection;
  */
 class EventCollection extends AbstractCollection
 {
+    /**
+     * {@inheritDoc}
+     * @param Event $element
+     */
+    public function add($element, $key = null)
+    {
+        if ($key == null) {
+            $key = $element->getIdentifier();
+        }
+
+        parent::add($element, $key);
+    }
 }
