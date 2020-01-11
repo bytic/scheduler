@@ -2,7 +2,9 @@
 
 namespace Bytic\Scheduler\Tests;
 
+use Bytic\Scheduler\Events\EventCollection;
 use Bytic\Scheduler\Helper;
+use Bytic\Scheduler\Loader\FileLoader\FileLoader;
 use Bytic\Scheduler\Scheduler;
 
 /**
@@ -16,7 +18,10 @@ class BaseSchedulerTest extends AbstractTest
         $scheduler = new Scheduler();
         Helper::setBasePath(TEST_FIXTURE_PATH);
 
-        $events = $scheduler->getEvents();
+        $events = new EventCollection();
+        $scheduler->setEvents($events);
+        FileLoader::loadEvents($scheduler);
+
         static::assertCount(1, $events);
     }
 }

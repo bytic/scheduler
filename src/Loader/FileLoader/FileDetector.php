@@ -1,12 +1,12 @@
 <?php
 
-namespace Bytic\Scheduler\Scheduler;
+namespace Bytic\Scheduler\Loader\FileLoader;
 
 use Bytic\Scheduler\Helper;
 
 /**
  * Class FileDetector
- * @package Bytic\Scheduler\Scheduler
+ * @package Bytic\Scheduler\\Loader\FileLoader
  */
 class FileDetector
 {

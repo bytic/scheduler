@@ -6,6 +6,7 @@ use ByTIC\Console\Command;
 use Exception;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -19,14 +20,21 @@ class RunEventCommand extends Command
         parent::configure();
         $this->setName('schedule:run-event')
             ->setDescription('Executes an event by id')
-            ->setDefinition(
-                [
-                    new InputArgument(
-                        'id',
-                        InputArgument::REQUIRED,
-                        'The event id to run'
-                    ),
-                ]
+//            ->setDefinition(
+//                [
+//                    new InputArgument(
+//                        'event',
+//                        InputArgument::REQUIRED,
+//                        'The event id to run'
+//                    ),
+//                ]
+//            )
+            ->addOption(
+                'event',
+                'e',
+                InputOption::VALUE_REQUIRED,
+                'Which task to run. Provide task number from <info>schedule:list</info> command.',
+                null
             )
             ->setHelp('This command executes an event.')
             ->setHidden(true);
@@ -41,7 +49,7 @@ class RunEventCommand extends Command
     {
         $args = [];
         /** @var string $closure */
-        $eventId = $input->getArgument('id');
+        $eventId = $input->getOption('event');
 
         $scheduler = scheduler();
         $event = $scheduler->getEvents()->get($eventId);

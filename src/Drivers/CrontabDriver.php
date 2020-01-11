@@ -5,6 +5,7 @@ namespace Bytic\Scheduler\Drivers;
 use Bytic\Scheduler\Crontab\Crontab;
 use Bytic\Scheduler\Events\Event;
 use Bytic\Scheduler\Events\EventCollection;
+use Bytic\Scheduler\Helper;
 
 /**
  * Class CrontabDriver
@@ -66,10 +67,9 @@ class CrontabDriver extends AbstractDriver
      */
     public function generateContentForEvent(Event $event)
     {
-        $content = $event->getExpression();
-        $content .= ' ' . $event->getCommand();
+        $content = $event->getExpression() . ' ';
+        $content .= Helper::normalizePath(Helper::getBasePath(), 'vendor', 'bin', 'bytic') . ' schedule:run-event';
+        $content .= ' -e ' . $event->getIdentifier();
         return $content;
     }
-
-
 }

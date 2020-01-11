@@ -3,6 +3,7 @@
 namespace Bytic\Scheduler;
 
 use Bytic\Scheduler\Events\EventCollection;
+use Bytic\Scheduler\Loader\CacheLoader\CacheLoader;
 
 /**
  * Class Scheduler
@@ -19,4 +20,5 @@ class Scheduler
     public function __construct()
     {
     }
+
 }

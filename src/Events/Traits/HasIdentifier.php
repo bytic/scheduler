@@ -35,6 +35,6 @@ trait HasIdentifier
      */
     protected function generateIdentifier()
     {
-        return md5($this->getCommand() . '-' . microtime() . '-' . uniqid('SCHEDULER'));
+        return md5($this->getCommand() . serialize($this));
     }
 }

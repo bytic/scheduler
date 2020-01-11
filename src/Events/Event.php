@@ -14,6 +14,8 @@ class Event
     use Traits\HasIdentifier;
     use Traits\HasNameDescription;
     use Traits\HasOutput;
+    use Traits\HasUser;
+    use Traits\HasWorkingDirectory;
     use Traits\IsExecutable;
     use Traits\ManagesFrequencies;
 

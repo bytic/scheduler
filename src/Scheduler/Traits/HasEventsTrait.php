@@ -5,6 +5,7 @@ namespace Bytic\Scheduler\Scheduler\Traits;
 use Bytic\Scheduler\Events\Event;
 use Bytic\Scheduler\Events\EventAdder;
 use Bytic\Scheduler\Events\EventCollection;
+use Bytic\Scheduler\Loader\EventsLoader;
 use Bytic\Scheduler\Scheduler;
 use Bytic\Scheduler\Scheduler\FileDetector;
 
@@ -54,26 +55,14 @@ trait HasEventsTrait
     protected function initEvents()
     {
         $this->events = new EventCollection();
-        if ($this->loadEventsFromCache()) {
-            return;
-        }
-        $this->loadEventsFromFile();
+        EventsLoader::loadEvents($this);
     }
 
     /**
-     * @return bool
+     * @param EventCollection $events
      */
-    protected function loadEventsFromCache()
+    public function setEvents(EventCollection $events)
     {
-        return false;
-    }
-
-    protected function loadEventsFromFile()
-    {
-        /** @var Scheduler $scheduler */
-        $scheduler = $this;
-        $file = (new FileDetector($scheduler))->getPath();
-
-        require_once $file;
+        $this->events = $events;
     }
 }

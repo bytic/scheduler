@@ -50,4 +50,47 @@ class Helper
         }
         return null;
     }
+
+    /**
+     * @param mixed ...$parts
+     * @return string
+     */
+    static public function normalizePath(...$parts)
+    {
+        $path = '';
+
+        if (is_array($parts[0]) && count($parts[0]) > 1) {
+            $parts = $parts[0];
+        }
+        if (count($parts) > 1) {
+            $path = implode(DIRECTORY_SEPARATOR, $parts);
+        }
+        if (is_string($parts[0])) {
+            $path = $parts[0];
+        }
+
+        return $path;
+    }
+
+    /**
+     * @param null|boolean $value
+     * @return bool
+     */
+    static public function isWindows($value = null): bool
+    {
+        static $isWindows = null;
+
+        if (is_bool($value)) {
+            $isWindows = $value;
+        }
+        if ($isWindows === null) {
+            $osCode = \mb_substr(
+                PHP_OS,
+                0,
+                3
+            );
+            $isWindows = 'WIN' === $osCode;
+        }
+        return $isWindows;
+    }
 }
