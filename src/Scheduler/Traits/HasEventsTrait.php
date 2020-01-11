@@ -27,9 +27,7 @@ trait HasEventsTrait
      */
     public function getEvents(): EventCollection
     {
-        if ($this->events === null) {
-            $this->initEvents();
-        }
+        $this->checkInitEvents();
         return $this->events;
     }
 
@@ -52,6 +50,13 @@ trait HasEventsTrait
         $this->eventsByDriver[$event->getDriver()][] = $event->getIdentifier();
     }
 
+    protected function checkInitEvents()
+    {
+        if ($this->events === null) {
+            $this->initEvents();
+        }
+    }
+
     protected function initEvents()
     {
         $this->events = new EventCollection();
@@ -64,5 +69,9 @@ trait HasEventsTrait
     public function setEvents(EventCollection $events)
     {
         $this->events = $events;
+        $this->eventsByDriver = [];
+        foreach ($events as $event) {
+            $this->eventsByDriver[$event->getDriver()][] = $event->getIdentifier();
+        }
     }
 }

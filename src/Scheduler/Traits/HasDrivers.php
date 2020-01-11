@@ -15,6 +15,7 @@ trait HasDrivers
 
     public function publish()
     {
+        $this->checkInitEvents();
         foreach ($this->eventsByDriver as $driver => $identifiers) {
             $eventCollection = $this->getEvents()->only($identifiers);
             DriverManager::publish($eventCollection, $driver);

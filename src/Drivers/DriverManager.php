@@ -17,10 +17,14 @@ class DriverManager
     protected static $instances = [
     ];
 
+    /**
+     * @param EventCollection $collection
+     * @param $driver
+     */
     public static function publish(EventCollection $collection, $driver)
     {
         $driver = static::get($driver);
-        $driver::publish($collection);
+        $driver->publish($collection);
     }
 
     /**

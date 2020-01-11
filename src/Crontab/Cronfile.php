@@ -58,9 +58,9 @@ class Cronfile
     /**
      * @param $content
      */
-    protected function updateContent($content)
+    public function updateContent($content)
     {
-        $content = $this->header . PHP_EOL . $content . $this->footer;
+        $content = $this->header . PHP_EOL . $content . PHP_EOL . $this->footer;
 
         if ($this->hasHeader && $this->hasFooter) {
             $this->content = preg_replace("/^$header\s*$.*?^$footer\s*$/sm", $content, $this->content);

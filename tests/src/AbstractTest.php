@@ -2,8 +2,8 @@
 
 namespace Bytic\Scheduler\Tests;
 
+use Mockery as m;
 use PHPUnit\Framework\TestCase;
-use \Mockery as m;
 
 /**
  * Class AbstractTest
@@ -14,6 +14,9 @@ abstract class AbstractTest extends TestCase
     public function tearDown()
     {
         parent::tearDown();
+        $this->addToAssertionCount(
+            \Mockery::getContainer()->mockery_getExpectationCount()
+        );
         m::close();
     }
 }

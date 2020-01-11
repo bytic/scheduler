@@ -25,9 +25,7 @@ trait HasWriterTrait
      */
     public function write($content, $user = null)
     {
-        $cronfile = $this->getCronfile($user);
-        $cronfile->updateContent($content);
-        $crontab = $cronfile->getContent();
+        $crontab = $this->generateCrontabContent($content, $user);
         
         $tempFile = tempnam(sys_get_temp_dir(), 'bytic_cron');
         file_put_contents($tempFile, $crontab);
@@ -38,5 +36,17 @@ trait HasWriterTrait
             throw new RuntimeException($process->getErrorOutput());
         }
         return $exitCode;
+    }
+
+    /**
+     * @param $content
+     * @param null $user
+     * @return mixed
+     */
+    protected function generateCrontabContent($content, $user = null)
+    {
+        $cronfile = $this->getCronfile($user);
+        $cronfile->updateContent($content);
+        return $cronfile->getContent();
     }
 }

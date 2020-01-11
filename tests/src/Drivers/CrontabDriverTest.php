@@ -31,11 +31,11 @@ class CrontabDriverTest extends AbstractTest
         return [
             [
                 (new Event('php foe1')),
-                '* * * * * H:\webdev\www\libraries\bytic\scheduler\tests\fixtures schedule:run-event -e 9b76e2491ed3f8197f86329b03c4bf9b'
+                '* * * * * ' . TEST_FIXTURE_PATH . '\vendor\bin\bytic schedule:run-event -e 9b76e2491ed3f8197f86329b03c4bf9b'
             ],
             [
                 (new Event('php foe2')),
-                '* * * * * H:\webdev\www\libraries\bytic\scheduler\tests\fixtures schedule:run-event -e 8e21bdada66ea36a9691dad5b511fb71'
+                '* * * * * ' . TEST_FIXTURE_PATH . '\vendor\bin\bytic schedule:run-event -e 8e21bdada66ea36a9691dad5b511fb71'
             ],
         ];
     }

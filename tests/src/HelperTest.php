@@ -17,4 +17,22 @@ class HelperTest extends AbstractTest
         static::assertTrue(Helper::isWindows(true));
         static::assertTrue(Helper::isWindows());
     }
+
+    public function test_normalizePath()
+    {
+        static::assertSame(
+            'test',
+            Helper::normalizePath('test')
+        );
+
+        static::assertSame(
+            'dir' . DIRECTORY_SEPARATOR . 'test',
+            Helper::normalizePath(['dir', 'test'])
+        );
+
+        static::assertSame(
+            'dir' . DIRECTORY_SEPARATOR . 'test',
+            Helper::normalizePath('dir', 'test')
+        );
+    }
 }

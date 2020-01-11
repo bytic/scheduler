@@ -30,11 +30,7 @@ class PublishCommand extends Command
         $scheduler = scheduler();
         $scheduler->publish();
 
-        $extensions = $this->getLimitsExtensions($input, $output);
-        $exitStatusExtension = new ExitStatusExtension();
-        array_unshift($extensions, $exitStatusExtension);
-
-        return $exitStatusExtension->getExitStatus();
+        return 0;
     }
 
     /**
