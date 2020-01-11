@@ -31,7 +31,7 @@ class DriverManager
     {
         if (!static::$instances[$driver]) {
             $class = static::$list[$driver];
-            static::add( new $class(), $driver);
+            static::add(new $class(), $driver);
         }
 
         return static::$instances[$driver];

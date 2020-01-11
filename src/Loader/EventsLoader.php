@@ -16,7 +16,7 @@ class EventsLoader
     /**
      * @param Scheduler|HasEventsTrait $scheduler
      */
-    static public function loadEvents(Scheduler $scheduler)
+    public static function loadEvents(Scheduler $scheduler)
     {
         if (static::loadEventsFromCache($scheduler)) {
             return;
@@ -29,7 +29,7 @@ class EventsLoader
      * @param Scheduler $scheduler
      * @return bool
      */
-    static protected function loadEventsFromCache(Scheduler $scheduler)
+    protected static function loadEventsFromCache(Scheduler $scheduler)
     {
         return CacheLoader::loadEvents($scheduler);
     }
@@ -38,7 +38,7 @@ class EventsLoader
      * @param Scheduler $scheduler
      * @return bool
      */
-    static protected function loadEventsFromFile(Scheduler $scheduler)
+    protected static function loadEventsFromFile(Scheduler $scheduler)
     {
         return FileLoader::loadEvents($scheduler);
     }

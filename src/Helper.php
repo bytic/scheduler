@@ -16,7 +16,7 @@ class Helper
     /**
      * @return null|string
      */
-    static public function getBasePath()
+    public static function getBasePath()
     {
         if (static::$basePath === null) {
             static::$basePath = static::detectAppPath();
@@ -35,7 +35,7 @@ class Helper
     /**
      * @return null|string
      */
-    static protected function detectAppPath()
+    protected static function detectAppPath()
     {
         $basePath = __DIR__;
 
@@ -55,7 +55,7 @@ class Helper
      * @param mixed ...$parts
      * @return string
      */
-    static public function normalizePath(...$parts)
+    public static function normalizePath(...$parts)
     {
         $path = '';
 
@@ -76,7 +76,7 @@ class Helper
      * @param null|boolean $value
      * @return bool
      */
-    static public function isWindows($value = null): bool
+    public static function isWindows($value = null): bool
     {
         static $isWindows = null;
 

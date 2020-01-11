@@ -78,10 +78,10 @@ class ManagesFrequenciesTest extends AbstractTest
         static::assertEquals('* * * * 0,6', $e->weekends()->getExpression());
 
         $e = new Event('php foo');
-        static::assertEquals('* * * * 1,3,5', $e->dayOfWeek(1,3,5)->getExpression());
+        static::assertEquals('* * * * 1,3,5', $e->dayOfWeek(1, 3, 5)->getExpression());
 
         $e = new Event('php foo');
-        static::assertEquals('* * * * 1,3,5', $e->days(1,3,5)->getExpression());
+        static::assertEquals('* * * * 1,3,5', $e->days(1, 3, 5)->getExpression());
 
         $e = new Event('php foo');
         static::assertEquals('* * * * 1', $e->mondays()->getExpression());

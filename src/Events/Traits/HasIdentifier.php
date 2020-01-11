@@ -17,7 +17,6 @@ trait HasIdentifier
     {
         if ($this->identifier === null) {
             $this->setIdentifier($this->generateIdentifier());
-
         }
         return $this->identifier;
     }
