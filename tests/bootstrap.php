@@ -7,4 +7,4 @@ define('TEST_FIXTURE_PATH', TEST_BASE_PATH . DIRECTORY_SEPARATOR . 'fixtures');
 require PROJECT_BASE_PATH . '/vendor/autoload.php';
 
 \Bytic\Scheduler\Helper::isWindows(false);
-define('CACHE_PATH', TEST_FIXTURE_PATH . DIRECTORY_SEPARATOR . 'tmp');
+define('CACHE_PATH', TEST_FIXTURE_PATH . DIRECTORY_SEPARATOR . 'cache');

@@ -43,8 +43,8 @@ class Cronfile
 
     protected function detectHeaderFooter()
     {
-        $this->hasHeader = preg_match("/^$this->header\s*$/m", $this->content) === 1;
-        $this->hasFooter = preg_match("/^$this->footer\s*$/m", $this->content) === 1;
+        $this->hasHeader = preg_match("/^" . preg_quote($this->header, "/") . "\s*$/m", $this->content) === 1;
+        $this->hasFooter = preg_match("/^" . preg_quote($this->footer, "/") . "\s*$/m", $this->content) === 1;
 
         if ($this->hasHeader && !$this->hasFooter) {
             throw new InvalidIdentifierException(sprintf('Unclosed identifier. Your crontab contains "%s", but no "%s".',

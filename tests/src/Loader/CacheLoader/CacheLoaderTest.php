@@ -14,20 +14,6 @@ use Bytic\Scheduler\Tests\AbstractTest;
  */
 class CacheLoaderTest extends AbstractTest
 {
-    public function test_loadEvents()
-    {
-        $scheduler = new Scheduler();
-        $events = new EventCollection();
-        $scheduler->setEvents($events);
-
-        static::assertCount(0, $events);
-
-        $result = CacheLoader::loadEvents($scheduler);
-        self::assertTrue($result);
-
-        static::assertCount(2, $scheduler->getEvents());
-    }
-
     public function test_saveEvents()
     {
         @unlink(CACHE_PATH . '/scheduler.php');
@@ -47,5 +33,19 @@ class CacheLoaderTest extends AbstractTest
         CacheLoader::saveEvents($scheduler);
 
         self::assertFileExists(CACHE_PATH . '/scheduler.php');
+    }
+
+    public function test_loadEvents()
+    {
+        $scheduler = new Scheduler();
+        $events = new EventCollection();
+        $scheduler->setEvents($events);
+
+        static::assertCount(0, $events);
+
+        $result = CacheLoader::loadEvents($scheduler);
+        self::assertTrue($result);
+
+        static::assertCount(2, $scheduler->getEvents());
     }
 }

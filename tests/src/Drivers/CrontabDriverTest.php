@@ -4,6 +4,7 @@ namespace Bytic\Scheduler\Tests\Drivers;
 
 use Bytic\Scheduler\Drivers\CrontabDriver;
 use Bytic\Scheduler\Events\Event;
+use Bytic\Scheduler\Helper;
 use Bytic\Scheduler\Tests\AbstractTest;
 
 /**
@@ -28,14 +29,15 @@ class CrontabDriverTest extends AbstractTest
      */
     public function data_generateContentForEvent()
     {
+        $byticPath =  Helper::normalizePath(TEST_FIXTURE_PATH, 'vendor', 'bin', 'bytic');
         return [
             [
                 (new Event('php foe1')),
-                '* * * * * ' . TEST_FIXTURE_PATH . '\vendor\bin\bytic schedule:run-event -e 9b76e2491ed3f8197f86329b03c4bf9b'
+                '* * * * * ' . $byticPath . ' schedule:run-event -e 9b76e2491ed3f8197f86329b03c4bf9b'
             ],
             [
                 (new Event('php foe2')),
-                '* * * * * ' . TEST_FIXTURE_PATH . '\vendor\bin\bytic schedule:run-event -e 8e21bdada66ea36a9691dad5b511fb71'
+                '* * * * * ' . $byticPath . ' schedule:run-event -e 8e21bdada66ea36a9691dad5b511fb71'
             ],
         ];
     }
