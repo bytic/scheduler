@@ -15,7 +15,7 @@ class FileLoader
      * @return bool
      * @noinspection PhpDocMissingThrowsInspection
      */
-    static public function loadEvents(Scheduler $scheduler)
+    public static function loadEvents(Scheduler $scheduler)
     {
         /** @noinspection PhpUnhandledExceptionInspection */
         $file = (new FileDetector($scheduler))->getPath();

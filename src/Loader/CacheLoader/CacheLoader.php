@@ -31,7 +31,7 @@ class CacheLoader
      * @param Scheduler $scheduler
      * @return bool
      */
-    static public function loadEvents(Scheduler $scheduler)
+    public static function loadEvents(Scheduler $scheduler)
     {
         $data = static::instance()->cacheManager->get(
             static::instance()->cacheId()
@@ -46,7 +46,7 @@ class CacheLoader
     /**
      * @param Scheduler $scheduler
      */
-    static public function saveEvents(Scheduler $scheduler)
+    public static function saveEvents(Scheduler $scheduler)
     {
         static::instance()->cacheManager->saveData(
             static::instance()->cacheId(),

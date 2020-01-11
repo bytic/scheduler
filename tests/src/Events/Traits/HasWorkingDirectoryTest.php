@@ -14,7 +14,7 @@ class HasWorkingDirectoryTest extends AbstractTest
     public function test_in()
     {
         $event = new Event('php foo');
-        static::assertFalse( $event->getWorkingDirectory());
+        static::assertFalse($event->getWorkingDirectory());
 
         $event->in('/home/root');
 

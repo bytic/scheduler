@@ -75,5 +75,4 @@ trait HasExecutableTrait
     {
         $this->executable = '/usr/bin/crontab';
     }
-
 }
