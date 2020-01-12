@@ -32,15 +32,6 @@ trait HasEventsTrait
     }
 
     /**
-     * @param $command
-     * @return EventAdder
-     */
-    public function run($command)
-    {
-        return new EventAdder($this, $command);
-    }
-
-    /**
      * @param Event $event
      */
     public function addEvent($event)

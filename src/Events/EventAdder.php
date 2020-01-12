@@ -19,7 +19,7 @@ class EventAdder
 
     /**
      * EventAdder constructor.
-     * @param Scheduler|Scheduler\Traits\HasEventsTrait $scheduler
+     * @param Scheduler|Scheduler\Traits\EventAdderTrait $scheduler
      * @param $command
      */
     public function __construct(Scheduler $scheduler, $command)
