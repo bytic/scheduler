@@ -8,6 +8,7 @@ namespace Bytic\Scheduler\Events;
  */
 class Event
 {
+    use Traits\HasCallbacks;
     use Traits\HasCommand;
     use Traits\HasCronExpression;
     use Traits\HasDriver;

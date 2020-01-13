@@ -29,7 +29,7 @@
     }
   },
   "require": {
-    "php": ">=7.0",
+    "php": ">=7.1",
     "bytic/collections": "^1.0",
     "bytic/cache": "^0.9",
     "bytic/console": "^0.9",

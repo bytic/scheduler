@@ -3,7 +3,8 @@
 namespace Bytic\Scheduler\Console;
 
 use ByTIC\Console\Command;
-use Bytic\Scheduler\Events\EventRunner;
+use Bytic\Scheduler\Events\EventCollection;
+use Bytic\Scheduler\Runner\EventRunner;
 use Exception;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -65,9 +66,11 @@ class RunEventCommand extends Command
 
         $scheduler = scheduler();
         $event = $scheduler->getEvents()->get($eventId);
+        $collection = new EventCollection();
+        $collection->add($event);
 
         // Running the events
-        $this->eventRunner->handle($output, $event);
+        $this->eventRunner->handle($output, $collection);
         return 0;
     }
 }

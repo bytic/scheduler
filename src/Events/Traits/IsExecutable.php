@@ -23,7 +23,10 @@ trait IsExecutable
         $process = Process::fromShellCommandline($command, null, null, null);
         $this->setProcess($process);
 
-        $process->start();
+        $process->start(
+            function ($type, $content): void {
+                $this->wholeOutput[] = $content;
+            });
     }
 
     /**
@@ -33,5 +36,13 @@ trait IsExecutable
     private function setProcess(Process $process): void
     {
         $this->process = $process;
+    }
+
+    /**
+     * @return Process
+     */
+    public function getProcess(): Process
+    {
+        return $this->process;
     }
 }

@@ -17,6 +17,16 @@ trait HasOutput
     public $output = '/dev/null';
 
     /**
+     * Event generated output.
+     *
+     * @var string|null
+     */
+    public $outputStream;
+
+    /** @var string[] */
+    protected $wholeOutput = [];
+
+    /**
      * Get the default output depending on the OS.
      *
      * @return string
@@ -37,4 +47,20 @@ trait HasOutput
 //            $this->sendOutputTo(storage_path('logs/schedule-'.sha1($this->mutexName()).'.log'));
 //        }
 //    }
+
+    /**
+     * Return event's full output.
+     *
+     * @return string|null
+     */
+    public function getOutputStream()
+    {
+        return $this->outputStream;
+    }
+
+    /** @return string */
+    public function wholeOutput()
+    {
+        return \implode('', $this->wholeOutput);
+    }
 }
