@@ -3,7 +3,6 @@
 namespace Bytic\Scheduler\Scheduler\Traits;
 
 use Bytic\Scheduler\Drivers\DriverManager;
-use Bytic\Scheduler\Loader\CacheLoader\CacheLoader;
 
 /**
  * Trait HasDrivers

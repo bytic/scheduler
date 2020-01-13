@@ -1,15 +1,16 @@
 <?php
 
-namespace Bytic\Scheduler\Crontab\Traits;
+namespace Bytic\Scheduler\Scheduler\Traits;
 
 use Bytic\Scheduler\Helper;
 
 /**
  * Trait HasIdentifierTrait
- * @package Bytic\Scheduler\Crontab\Traits
+ * @package Bytic\Scheduler\Scheduler\Traits
  */
 trait HasIdentifierTrait
 {
+
     /**
      * @var string
      */
@@ -36,6 +37,6 @@ trait HasIdentifierTrait
 
     protected function initIdentifier()
     {
-        $this->identifier = Helper::getBasePath();
+        $this->identifier = $this->getConfig('name', Helper::getBasePath());
     }
 }
