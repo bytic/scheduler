@@ -13,6 +13,10 @@ if (!function_exists('scheduler')) {
             return app('scheduler');
         }
 
-        return Container::getInstance()->get('scheduler');
+        $container = Container::getInstance();
+        if ($container->has('scheduler')) {
+            return $container->get('scheduler');
+        }
+        return null;
     }
 }

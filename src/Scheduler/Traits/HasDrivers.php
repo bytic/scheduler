@@ -20,4 +20,13 @@ trait HasDrivers
             DriverManager::publish($eventCollection, $driver);
         }
     }
+
+    /**
+     * @param $driver
+     * @return \Bytic\Scheduler\Drivers\CrontabDriver
+     */
+    public function getDriver(string $driver)
+    {
+        return DriverManager::get($driver);
+    }
 }

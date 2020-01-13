@@ -33,7 +33,7 @@ class DriverManager
      */
     public static function get($driver)
     {
-        if (!static::$instances[$driver]) {
+        if (!isset(static::$instances[$driver])) {
             $class = static::$list[$driver];
             static::add(new $class(), $driver);
         }

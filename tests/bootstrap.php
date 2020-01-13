@@ -8,3 +8,5 @@ require PROJECT_BASE_PATH . '/vendor/autoload.php';
 
 \Bytic\Scheduler\Helper::isWindows(false);
 define('CACHE_PATH', TEST_FIXTURE_PATH . DIRECTORY_SEPARATOR . 'cache');
+
+\Nip\Container\Container::setInstance(new \Nip\Container\Container());
