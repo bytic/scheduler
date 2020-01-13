@@ -3,8 +3,8 @@
 namespace Bytic\Scheduler\Console;
 
 use ByTIC\Console\Command;
+use Bytic\Scheduler\Events\EventRunner;
 use Exception;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,6 +15,18 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RunEventCommand extends Command
 {
+
+    protected $eventRunner;
+
+    /**
+     * @inheritDoc
+     */
+    public function __construct(string $name = null)
+    {
+        parent::__construct($name);
+        $this->eventRunner = new EventRunner();
+    }
+
     protected function configure()
     {
         parent::configure();
@@ -36,9 +48,9 @@ class RunEventCommand extends Command
                 'Which task to run. Provide task number from <info>schedule:list</info> command.',
                 null
             )
-            ->setHelp('This command executes an event.')
-            ->setHidden(true);
-    }/** @noinspection PhpMissingParentCallCommonInspection */
+            ->setHelp('This command executes an event.');
+//            ->setHidden(true);
+    }
 
     /**
      * @inheritDoc
@@ -54,6 +66,8 @@ class RunEventCommand extends Command
         $scheduler = scheduler();
         $event = $scheduler->getEvents()->get($eventId);
 
+        // Running the events
+        $this->eventRunner->handle($output, $event);
         return 0;
     }
 }
