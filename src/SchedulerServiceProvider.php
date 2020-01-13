@@ -4,6 +4,7 @@ namespace Bytic\Scheduler;
 
 use Bytic\Scheduler\Console\PublishCommand;
 use Bytic\Scheduler\Console\RunEventCommand;
+use Bytic\Scheduler\Drivers\CrontabDriver;
 use Nip\Container\ServiceProvider\AbstractSignatureServiceProvider;
 
 /**
@@ -18,6 +19,7 @@ class SchedulerServiceProvider extends AbstractSignatureServiceProvider
     public function register()
     {
         $this->registerScheduler();
+        $this->registerCrontabDriver();
     }
 
     /**
@@ -28,8 +30,19 @@ class SchedulerServiceProvider extends AbstractSignatureServiceProvider
     protected function registerScheduler()
     {
         $this->getContainer()->singleton('scheduler', function () {
-            $scheduler = new Scheduler();
+            $scheduler = $this->getContainer()->get(Scheduler::class);
             return $scheduler;
+        });
+    }
+
+    protected function registerCrontabDriver()
+    {
+        $this->getContainer()->singleton(CrontabDriver::class, function () {
+            $driver = new CrontabDriver();
+            $driver->getCrontab()->setIdentifier(
+                $this->getContainer()->get('scheduler')->getIdentifier()
+            );
+            return $driver;
         });
     }
 

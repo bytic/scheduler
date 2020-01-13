@@ -16,13 +16,7 @@ class HasDriversTest extends AbstractTest
     public function test_getDriver()
     {
         $scheduler = new Scheduler();
-        $scheduler->setIdentifier('TEST');
-
-        Container::getInstance()->set('scheduler', $scheduler);
-
         $driver = $scheduler->getDriver('crontab');
         self::assertInstanceOf(CrontabDriver::class, $driver);
-
-        self::assertSame('TEST', $driver->getCrontab()->getIdentifier());
     }
 }

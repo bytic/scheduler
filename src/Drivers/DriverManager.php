@@ -3,6 +3,7 @@
 namespace Bytic\Scheduler\Drivers;
 
 use Bytic\Scheduler\Events\EventCollection;
+use Nip\Container\Container;
 
 /**
  * Class DriverFactory
@@ -34,11 +35,31 @@ class DriverManager
     public static function get($driver)
     {
         if (!isset(static::$instances[$driver])) {
-            $class = static::$list[$driver];
-            static::add(new $class(), $driver);
+            static::add(static::instanceDriver($driver), $driver);
         }
 
         return static::$instances[$driver];
+    }
+
+    /**
+     * @param $driver
+     * @return bool|mixed|object
+     */
+    protected static function instanceDriver($driver)
+    {
+        $class = static::$list[$driver];
+        if (function_exists('app')) {
+            return app()->get($class);
+        }
+
+        if (class_exists(Container::class)) {
+            $container = Container::getInstance();
+            if ($container instanceof Container) {
+                return $container->get($class);
+            }
+        }
+
+        return new $class();
     }
 
     /**

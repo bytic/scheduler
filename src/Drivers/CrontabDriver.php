@@ -21,7 +21,7 @@ class CrontabDriver extends AbstractDriver
      */
     public function __construct()
     {
-        $this->crontab = new Crontab(scheduler()->getIdentifier());
+        $this->crontab = new Crontab();
     }
 
     /**

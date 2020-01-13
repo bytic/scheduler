@@ -3,6 +3,7 @@
 namespace Bytic\Scheduler\Tests\Crontab\Traits;
 
 use Bytic\Scheduler\Crontab\Crontab;
+use Bytic\Scheduler\Helper;
 use Bytic\Scheduler\Tests\AbstractTest;
 
 /**
@@ -14,6 +15,6 @@ class HasIdentifierTraitTest extends AbstractTest
     public function test_getIdentifier_default()
     {
         $crontab = new Crontab();
-        static::assertSame(dirname(dirname(dirname(PROJECT_BASE_PATH))), $crontab->getIdentifier());
+        static::assertSame(Helper::getBasePath(), $crontab->getIdentifier());
     }
 }
