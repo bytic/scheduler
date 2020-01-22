@@ -40,4 +40,3 @@ class PingerManagerTest extends AbstractTest
         PingerManager::ping('healthchecks', $event);
     }
 }
-
