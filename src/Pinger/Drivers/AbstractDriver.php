@@ -3,6 +3,7 @@
 namespace Bytic\Scheduler\Pinger\Drivers;
 
 use Bytic\Scheduler\Events\Event;
+use Bytic\Scheduler\Pinger\Drivers\Traits\PopulateFromConfig;
 
 /**
  * Class AbstractDriver
@@ -10,6 +11,18 @@ use Bytic\Scheduler\Events\Event;
  */
 abstract class AbstractDriver
 {
+    use PopulateFromConfig;
+
+
+    /**
+     * AbstractDriver constructor.
+     * @param array $config
+     */
+    public function __construct(array $config)
+    {
+        $this->populateFromConfig($config);
+    }
+
     /**
      * @param Event $event
      * @param array $options
