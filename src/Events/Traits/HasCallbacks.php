@@ -108,7 +108,7 @@ trait HasCallbacks
     {
         return $this->then(function () use ($callback) {
             if (!$this->getProcess()->isSuccessful()) {
-                return Invoker::call($callback, [], true);
+                Invoker::call($callback, [], true);
             }
         });
     }
