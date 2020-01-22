@@ -14,7 +14,7 @@ class HealthchecksDriver extends AbstractDriver
     /**
      * @inheritDoc
      */
-    function ping(Event $event, $options = [])
+    public function ping(Event $event, $options = [])
     {
         // TODO: Implement ping() method.
     }

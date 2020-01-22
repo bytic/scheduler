@@ -39,5 +39,4 @@ class EventAdderTraitTest extends AbstractTest
 
         static::assertCount(1, $events);
     }
-
 }

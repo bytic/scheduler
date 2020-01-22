@@ -15,5 +15,5 @@ abstract class AbstractDriver
      * @param array $options
      * @return mixed
      */
-    abstract function ping(Event $event, $options = []);
+    abstract public function ping(Event $event, $options = []);
 }
