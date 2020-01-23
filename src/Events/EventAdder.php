@@ -34,6 +34,14 @@ class EventAdder
     }
 
     /**
+     * @return Event
+     */
+    public function getEvent(): Event
+    {
+        return $this->event;
+    }
+
+    /**
      * @param $name
      * @param $arguments
      * @return $this

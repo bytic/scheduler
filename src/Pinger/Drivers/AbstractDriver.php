@@ -3,6 +3,9 @@
 namespace Bytic\Scheduler\Pinger\Drivers;
 
 use Bytic\Scheduler\Events\Event;
+use Bytic\Scheduler\Pinger\Drivers\Traits\HasEndpoints;
+use Bytic\Scheduler\Pinger\Drivers\Traits\HasHttpClient;
+use Bytic\Scheduler\Pinger\Drivers\Traits\HasUriMethods;
 use Bytic\Scheduler\Pinger\Drivers\Traits\PopulateFromConfig;
 
 /**
@@ -12,7 +15,6 @@ use Bytic\Scheduler\Pinger\Drivers\Traits\PopulateFromConfig;
 abstract class AbstractDriver
 {
     use PopulateFromConfig;
-
 
     /**
      * AbstractDriver constructor.

@@ -3,6 +3,7 @@
 namespace Bytic\Scheduler\Pinger\Drivers;
 
 use Bytic\Scheduler\Events\Event;
+use Bytic\Scheduler\Pinger\Drivers\Traits\isApiDriver;
 
 /**
  * Class HealthchecksDriver
@@ -10,36 +11,37 @@ use Bytic\Scheduler\Events\Event;
  */
 class HealthchecksDriver extends AbstractDriver
 {
-    /** @var string[] */
-    protected $apiKeys;
+    use isApiDriver;
 
-    /** @var int */
-    protected $baseUri;
+    const AUTH_HEADER = 'X-Api-Key';
+
+    const BASE_URI = 'https://healthchecks.io';
+
+    /** @var string */
+    protected $apiKey;
 
     protected $checks = null;
 
     /**
-     * HealthchecksDriver constructor.
      * @inheritDoc
      */
-<<<<<<< Updated upstream
-=======
-    public function __construct(array $config)
+    public function ping(Event $event, $options = [])
     {
-        parent::__construct($config);
+        $url = $this->determineUrlForEvent($event);
+        $this->pingUrl($url);
     }
 
     /**
-     * @inheritDoc
+     * @return |null
+     * @throws \Psr\Http\Client\ClientExceptionInterface
      */
->>>>>>> Stashed changes
-    public function ping(Event $event, $options = [])
+    public function getChecks()
     {
-        // TODO: Implement ping() method.
+        if ($this->checks === null) {
+            $this->checks = $this->generateChecks();
+        }
+        return $this->checks;
     }
-<<<<<<< Updated upstream
-}
-=======
 
     /**
      * @param Event $event
@@ -49,5 +51,30 @@ class HealthchecksDriver extends AbstractDriver
     {
         return '';
     }
+
+    /**
+     * @return mixed
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    protected function generateChecks()
+    {
+        $uri = $this->generateFullUri('/api/v1/checks/');
+
+        $request = $this->getRequestFactory()->createRequest('GET', $uri)
+            ->withHeader(self::AUTH_HEADER, $this->apiKey);
+
+        $response = $this->getClient()->sendRequest($request);
+        $body = (string)$response->getBody();
+
+        $checks = json_decode($body, true);
+        return $checks;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function generateBaseUri(): string
+    {
+        return self::BASE_URI;
+    }
 }
->>>>>>> Stashed changes
