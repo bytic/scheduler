@@ -13,6 +13,10 @@ class Scheduler
     use Scheduler\Traits\HasDrivers;
     use Scheduler\Traits\HasEventsTrait;
     use Scheduler\Traits\HasIdentifierTrait;
+    /**
+     * @var string Library version, used for setting User-Agent
+     */
+    const VERSION = '0.9';
 
     /**
      * Scheduler constructor.

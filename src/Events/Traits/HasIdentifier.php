@@ -29,6 +29,11 @@ trait HasIdentifier
         $this->identifier = $identifier;
     }
 
+    public function getIdentifierHumanRead()
+    {
+        return $this->getCommand();
+    }
+
     /**
      * @return string
      */

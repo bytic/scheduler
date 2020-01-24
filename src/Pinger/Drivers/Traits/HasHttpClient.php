@@ -5,6 +5,7 @@ namespace Bytic\Scheduler\Pinger\Drivers\Traits;
 use Http\Client\HttpClient;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
+use Http\Message\StreamFactory;
 use Http\Message\UriFactory;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
@@ -29,6 +30,11 @@ trait HasHttpClient
      * @var null|UriFactory|UriFactoryInterface
      */
     protected $uriFactory = null;
+
+    /**
+     * @var StreamFactory
+     */
+    protected $streamFactory;
 
     /**
      * @return HttpClient
@@ -57,10 +63,6 @@ trait HasHttpClient
         $this->getClient()->get($url);
     }
 
-    protected function send(string $method, $uri, array $headers = [], $body = null)
-    {
-
-    }
 
     /**
      * @return RequestFactoryInterface |null
@@ -91,5 +93,24 @@ trait HasHttpClient
         }
 
         return $this->uriFactory;
+    }
+
+    /**
+     * @return StreamFactory
+     */
+    public function getStreamFactory(): StreamFactory
+    {
+        if (null === $this->streamFactory) {
+            $this->streamFactory = Psr17FactoryDiscovery::findStreamFactory();
+        }
+        return $this->streamFactory;
+    }
+
+    /**
+     * @param StreamFactory $streamFactory
+     */
+    public function setStreamFactory(StreamFactory $streamFactory): void
+    {
+        $this->streamFactory = $streamFactory;
     }
 }

@@ -13,7 +13,7 @@ class HealthchecksDriverTest extends AbstractTest
 {
     public function test_getChecks()
     {
-        $driver = new HealthchecksDriver(['apiKey' => 'XLe2V17MnLl_kAnd5vSrZgoVffqdaycb']);
+        $driver = new HealthchecksDriver(['apiKey' => 'Uwrk3eAkL3lcPo2D1Ou0yZaYdCWybGXE']);
 
         $checks = $driver->getChecks();
         self::assertIsArray($checks);

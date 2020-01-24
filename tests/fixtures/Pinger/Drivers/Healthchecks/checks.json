@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "name": "Results # race_series-series_results.php",
+      "tags": "",
+      "desc": "",
+      "grace": 3600,
+      "n_pings": 57887,
+      "status": "up",
+      "last_ping": "2020-01-23T14:09:05+00:00",
+      "next_ping": "2020-01-23T16:10:00+02:00",
+      "ping_url": "https://hc-ping.com/076cf545-9999-9999-9999-999999999999",
+      "update_url": "https://healthchecks.io/api/v1/checks/076cf545-9999-9999-9999-999999999999",
+      "pause_url": "https://healthchecks.io/api/v1/checks/076cf545-9999-9999-9999-999999999999/pause",
+      "channels": "",
+      "schedule": "* * * * *",
+      "tz": "Europe/Bucharest"
+    },
+    {
+      "name": "Results # cache-jobs.php",
+      "tags": "",
+      "desc": "",
+      "grace": 3600,
+      "n_pings": 57893,
+      "status": "up",
+      "last_ping": "2020-01-23T14:09:05+00:00",
+      "next_ping": "2020-01-23T16:10:00+02:00",
+      "ping_url": "https://hc-ping.com/f1b7280f-f3c1-8888-8888-888888888888",
+      "update_url": "https://healthchecks.io/api/v1/checks/f1b7280f-f3c1-8888-8888-888888888888",
+      "pause_url": "https://healthchecks.io/api/v1/checks/f1b7280f-f3c1-8888-8888-888888888888/pause",
+      "channels": "",
+      "schedule": "* * * * *",
+      "tz": "Europe/Bucharest"
+    }
+  ]
+}

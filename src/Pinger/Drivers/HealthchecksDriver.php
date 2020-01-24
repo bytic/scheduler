@@ -4,6 +4,8 @@ namespace Bytic\Scheduler\Pinger\Drivers;
 
 use Bytic\Scheduler\Events\Event;
 use Bytic\Scheduler\Pinger\Drivers\Traits\isApiDriver;
+use Bytic\Scheduler\Scheduler;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class HealthchecksDriver
@@ -33,7 +35,6 @@ class HealthchecksDriver extends AbstractDriver
 
     /**
      * @return |null
-     * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getChecks()
     {
@@ -49,27 +50,80 @@ class HealthchecksDriver extends AbstractDriver
      */
     protected function determineUrlForEvent(Event $event)
     {
-        return '';
+        $cacheKey = $event->getIdentifier();
+        $urlCached = cache()->get('scheduler-healthchecks');
+        $urlCached = is_array($urlCached) ? $urlCached : [];
+        if (isset($urlCached[$cacheKey])) {
+            return $urlCached[$cacheKey];
+        }
+        $urlCached[$cacheKey] = $this->generateUrlForEvent($event);
+        cache()->put('scheduler-healthchecks',$urlCached);
+        return $urlCached[$cacheKey];
     }
 
     /**
-     * @return mixed
-     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @param Event $event
+     * @return string
      */
-    protected function generateChecks()
+    protected function generateUrlForEvent(Event $event)
     {
-        $uri = $this->generateFullUri('/api/v1/checks/');
+        $name = $event->getIdentifierHumanRead();
 
-        $request = $this->getRequestFactory()->createRequest('GET', $uri)
-            ->withHeader(self::AUTH_HEADER, $this->apiKey);
-
-        $response = $this->getClient()->sendRequest($request);
-        $body = (string)$response->getBody();
-
-        $checks = json_decode($body, true);
-        return $checks;
+        $checks = $this->getChecks();
+        foreach ($checks as $check) {
+            if ($check['name'] == $name) {
+                return $check['ping_url'];
+            }
+        }
+        $check = $this->createCheckForEvent($event);
+        return $check['ping_url'];
     }
 
+    /**
+     * @return array
+     */
+    public function generateChecks()
+    {
+        $response = $this->request('GET','/api/v1/checks/');
+        return $response['checks'];
+    }
+
+    /**
+     * @param Event $event
+     * @return array
+     */
+    public function createCheckForEvent(Event $event)
+    {
+        $data = [
+            'name' => $event->getIdentifierHumanRead(),
+            'tags' => '',
+            'desc' => $event->getSummaryForDisplay(),
+            'timeout' => 86400,
+            'grace' => 60,
+            'schedule' => $event->getExpression(),
+            'unique' => ["name"],
+        ];
+        return $this->request('POST','/api/v1/checks/', $data);
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @return string
+     */
+    protected function decodeResponse(ResponseInterface $response)
+    {
+        return json_decode((string) $response->getBody(), true);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getHttpHeadersDefault()
+    {
+        return [
+            self::AUTH_HEADER => $this->apiKey,
+        ];
+    }
     /**
      * @inheritDoc
      */
