@@ -39,4 +39,14 @@ class PingerManagerTest extends AbstractTest
 
         PingerManager::ping('healthchecks', $event);
     }
+
+    public function test_instanceDriver_with_config()
+    {
+        $manager = \Mockery::mock(PingerManager::class)->makePartial()->shouldAllowMockingProtectedMethods();
+        $manager->shouldReceive('driverConfig')->with('healthchecks')->once()->andReturn(['apiKey' => '1111']);
+
+        $healthchecks = $manager->get('healthchecks');
+        self::assertInstanceOf(HealthchecksDriver::class, $healthchecks);
+        self::assertSame('1111', $healthchecks->getApiKey());
+    }
 }

@@ -20,7 +20,7 @@ abstract class AbstractDriver
      * AbstractDriver constructor.
      * @param array $config
      */
-    public function __construct(array $config)
+    public function __construct(array $config = [])
     {
         $this->populateFromConfig($config);
     }

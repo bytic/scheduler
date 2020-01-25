@@ -4,7 +4,6 @@ namespace Bytic\Scheduler\Pinger\Drivers;
 
 use Bytic\Scheduler\Events\Event;
 use Bytic\Scheduler\Pinger\Drivers\Traits\isApiDriver;
-use Bytic\Scheduler\Scheduler;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -124,11 +123,20 @@ class HealthchecksDriver extends AbstractDriver
             self::AUTH_HEADER => $this->apiKey,
         ];
     }
+
     /**
      * @inheritDoc
      */
     protected function generateBaseUri(): string
     {
         return self::BASE_URI;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiKey(): string
+    {
+        return $this->apiKey;
     }
 }

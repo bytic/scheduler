@@ -8,4 +8,10 @@ return [
     |
     */
     'name' => env('APP_SITE', 'Application'),
+
+    'pingers' => [
+        'healthchecks' => [
+            'apiKey' => '',
+        ]
+    ]
 ];

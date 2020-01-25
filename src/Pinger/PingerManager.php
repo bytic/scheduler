@@ -59,18 +59,31 @@ class PingerManager
     protected static function instanceDriver($driver)
     {
         $class = static::$list[$driver];
+        $config = static::driverConfig($driver);
+
         if (function_exists('app')) {
-            return app()->get($class);
+            return app()->get($class, [$config]);
         }
 
         if (class_exists(Container::class)) {
             $container = Container::getInstance();
             if ($container instanceof Container) {
-                return $container->get($class);
+                return $container->get($class, [$config]);
             }
         }
+        return new $class($config);
+    }
 
-        return new $class();
+    /**
+     * @param $driver
+     * @return array
+     */
+    protected static function driverConfig($driver)
+    {
+        if (function_exists('config') && function_exists('app')) {
+            return config('scheduler.pingers.' . $driver, []);
+        }
+        return [];
     }
 
     /**
