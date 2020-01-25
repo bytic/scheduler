@@ -94,4 +94,9 @@ class PingerManager
     {
         static::$instances[$name] = $driver;
     }
+
+    public static function reset()
+    {
+        static::$instances = [];
+    }
 }

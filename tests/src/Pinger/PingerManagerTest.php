@@ -7,6 +7,7 @@ use Bytic\Scheduler\Pinger\Drivers\HealthchecksDriver;
 use Bytic\Scheduler\Pinger\Drivers\UrlDriver;
 use Bytic\Scheduler\Pinger\PingerManager;
 use Bytic\Scheduler\Tests\AbstractTest;
+use Mockery\Mock;
 use Nip\Container\Container;
 
 /**
@@ -42,8 +43,10 @@ class PingerManagerTest extends AbstractTest
 
     public function test_instanceDriver_with_config()
     {
+        /** @var PingerManager|Mock $manager */
         $manager = \Mockery::mock(PingerManager::class)->makePartial()->shouldAllowMockingProtectedMethods();
         $manager->shouldReceive('driverConfig')->with('healthchecks')->once()->andReturn(['apiKey' => '1111']);
+        $manager::reset();
 
         $healthchecks = $manager->get('healthchecks');
         self::assertInstanceOf(HealthchecksDriver::class, $healthchecks);

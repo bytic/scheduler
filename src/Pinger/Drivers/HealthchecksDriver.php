@@ -116,9 +116,13 @@ class HealthchecksDriver extends AbstractDriver
 
     /**
      * @return array
+     * @noinspection PhpDocMissingThrowsInspection
      */
     protected function getHttpHeadersDefault()
     {
+        if (empty($this->getApiKey())) {
+            throw new \Exception("HealthchecksDriver needs apiKey to perform requests");
+        }
         return [
             self::AUTH_HEADER => $this->apiKey,
         ];

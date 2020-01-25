@@ -66,7 +66,9 @@ class HealthchecksDriverTest extends AbstractTest
     {
         /** @var HealthchecksDriver|\Mockery\MockInterface $driver */
         $driver = \Mockery::mock(HealthchecksDriver::class)->makePartial()->shouldAllowMockingProtectedMethods();
-        $driver->populateFromConfig(['apiKey' => getenv('HEALTHCHECKS_API')]);
+
+        $apiKey = getenv('HEALTHCHECKS_API');
+        $driver->populateFromConfig(['apiKey' => $apiKey ? $apiKey : '9999']);
         return $driver;
     }
 
