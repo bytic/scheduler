@@ -58,6 +58,16 @@ trait HasOutput
         return $this->outputStream;
     }
 
+    /**
+     * @return \Closure
+     */
+    protected function outputCaptureProcessCallback()
+    {
+        return function ($type, $content): void {
+            $this->wholeOutput[] = $content;
+        };
+    }
+
     /** @return string */
     public function wholeOutput()
     {

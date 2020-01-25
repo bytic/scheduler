@@ -23,10 +23,20 @@ trait IsExecutable
         $process = Process::fromShellCommandline($command, null, null, null);
         $this->setProcess($process);
 
-        $process->start(
-            function ($type, $content): void {
-                $this->wholeOutput[] = $content;
-            });
+        $process->start($this->outputCaptureProcessCallback());
+    }
+
+    /**
+     * @return bool
+     */
+    public function waitUntilFinish()
+    {
+        $process = $this->getProcess();
+
+        while ($process->isRunning()) {
+            \usleep(250000);
+        }
+        return true;
     }
 
     /**
