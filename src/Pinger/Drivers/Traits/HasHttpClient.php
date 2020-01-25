@@ -8,6 +8,7 @@ use Http\Discovery\Psr18ClientDiscovery;
 use Http\Message\StreamFactory;
 use Http\Message\UriFactory;
 use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
 
 /**
@@ -96,9 +97,9 @@ trait HasHttpClient
     }
 
     /**
-     * @return StreamFactory
+     * @return StreamFactoryInterface
      */
-    public function getStreamFactory(): StreamFactory
+    public function getStreamFactory(): StreamFactoryInterface
     {
         if (null === $this->streamFactory) {
             $this->streamFactory = Psr17FactoryDiscovery::findStreamFactory();
@@ -107,9 +108,9 @@ trait HasHttpClient
     }
 
     /**
-     * @param StreamFactory $streamFactory
+     * @param StreamFactoryInterface $streamFactory
      */
-    public function setStreamFactory(StreamFactory $streamFactory): void
+    public function setStreamFactory(StreamFactoryInterface $streamFactory): void
     {
         $this->streamFactory = $streamFactory;
     }

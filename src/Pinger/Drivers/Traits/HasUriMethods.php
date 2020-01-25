@@ -23,7 +23,7 @@ trait HasUriMethods
             ->createUri(sprintf('%s' . $path, $this->getBaseUri()));
 
         if (is_array($query)) {
-            $query = implode('&', $this->buildQuery($query));
+            $query =  $this->buildQuery($query);
         }
         if (!empty($query)) {
             $uri = $uri->withQuery($query);

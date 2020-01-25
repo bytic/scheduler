@@ -82,7 +82,7 @@ class HealthchecksDriver extends AbstractDriver
     /**
      * @return array
      */
-    public function generateChecks()
+    protected function generateChecks()
     {
         $response = $this->request('GET','/api/v1/checks/');
         return $response['checks'];

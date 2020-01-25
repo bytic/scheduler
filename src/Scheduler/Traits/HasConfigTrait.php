@@ -22,6 +22,16 @@ trait HasConfigTrait
             $name = '.' . $name;
         }
         $name = 'scheduler' . $name;
+        return $this->getConfigBase($name, $default);
+    }
+
+    /**
+     * @param $name
+     * @param null $default
+     * @return mixed|\Nip\Config\Config
+     */
+    protected function getConfigBase($name, $default = null)
+    {
         return config($name, $default);
     }
 }

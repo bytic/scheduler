@@ -1,0 +1,15 @@
+{
+  "channels": "",
+  "desc": "",
+  "grace": 60,
+  "last_ping": null,
+  "n_pings": 0,
+  "name": "Backups",
+  "next_ping": null,
+  "pause_url": "https://healthchecks.io/api/v1/checks/f618072a-8888-8888-888888888888/pause",
+  "ping_url": "https://hc-ping.com/f618072a-7bde-8888-8888-888888888888",
+  "status": "new",
+  "tags": "prod www",
+  "timeout": 3600,
+  "update_url": "https://healthchecks.io/api/v1/checks/f618072a-7bde-8888-8888-888888888888"
+}

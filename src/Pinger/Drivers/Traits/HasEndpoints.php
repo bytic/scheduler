@@ -22,7 +22,7 @@ trait HasEndpoints
      *
      * @return string|array
      */
-    public function request($method, $path, array $params)
+    public function request($method, $path, array $params = [])
     {
         $request = $this->buildRequest($method, $path, $params, []);
         $response = $this->executeRequest($request);
@@ -81,7 +81,7 @@ trait HasEndpoints
     protected function buildRequestValues($method, $path, $payload, $headers)
     {
         $method = trim(strtoupper($method));
-        $body = null;
+        $body = $this->getStreamFactory()->createStream('');
 
         if ($method === 'GET') {
             $params = $payload;
@@ -141,8 +141,10 @@ trait HasEndpoints
     protected function buildRequestInstance($method, $uri, $headers, $body)
     {
         $request = $this->getRequestFactory()->createRequest($method, $uri)
-            ->withHeaders($headers)
             ->withBody($body);
+        foreach ($headers as $name => $value) {
+            $request = $request->withHeader($name, $value);
+        }
 
         return $request;
     }

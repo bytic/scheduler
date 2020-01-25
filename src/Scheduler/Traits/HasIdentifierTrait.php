@@ -37,6 +37,20 @@ trait HasIdentifierTrait
 
     protected function initIdentifier()
     {
-        $this->identifier = $this->getConfig('name', Helper::getBasePath());
+        $this->identifier = $this->generateIdentifier();
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function generateIdentifier()
+    {
+        $identifier = Helper::getBasePath();
+        if (function_exists('app') && function_exists('config')) {
+            $configName = $this->getConfigBase('app.name');
+            $identifier = (empty($configName)) ? $identifier : $configName;
+        }
+
+        return $this->getConfig('name', $identifier);
     }
 }

@@ -22,6 +22,7 @@ class EventRunnerTest extends AbstractTest
 
         $output = $this->createMock(OutputInterface::class);
         $eventRunner = $this->createEventRunnerMock();
+        $eventRunner->shouldReceive('manageStartedEvents')->once();
 
         $eventRunner->handle($output, $eventCollection);
     }
