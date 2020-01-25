@@ -29,9 +29,12 @@ trait HasIdentifier
         $this->identifier = $identifier;
     }
 
+    /**
+     * @return string
+     */
     public function getIdentifierHumanRead()
     {
-        return $this->getCommand();
+        return scheduler()->getIdentifier() . ' # ' . $this->getCommand();
     }
 
     /**

@@ -4,8 +4,10 @@ namespace Bytic\Scheduler\Tests\Pinger\Drivers;
 
 use Bytic\Scheduler\Events\Event;
 use Bytic\Scheduler\Pinger\Drivers\HealthchecksDriver;
+use Bytic\Scheduler\Scheduler;
 use Bytic\Scheduler\Tests\AbstractTest;
 use Http\Discovery\Psr17FactoryDiscovery;
+use Nip\Container\Container;
 
 /**
  * Class HealthchecksDriverTest
@@ -26,12 +28,29 @@ class HealthchecksDriverTest extends AbstractTest
 
     public function test_createCheckForEvent()
     {
-        $driver = $this->newHealthchecksDriverMock();
-        $driver->shouldReceive('executeRequest')
-            ->andReturn($this->newResponse(file_get_contents(TEST_FIXTURE_PATH . '/Pinger/Drivers/Healthchecks/create.json')));
-
         $event = new Event('php foe');
-//        $event->description('my cron desc');
+        $event->description('my cron desc');
+
+        $scheduler = new Scheduler();
+        $scheduler->setIdentifier('MYSC');
+        Container::getInstance()->set('scheduler', $scheduler);
+
+        $driver = $this->newHealthchecksDriverMock();
+        $driver->shouldReceive('request')
+            ->with('POST', \Mockery::any(), \Mockery::on(function ($data) {
+                if (!is_array($data)) {
+                    return false;
+                }
+                if ($data['name'] != 'MYSC # php foe') {
+                    return false;
+                }
+                if ($data['tags'] != 'MYSC') {
+                    return false;
+                }
+                return true;
+            }))
+            ->andReturn(json_decode(file_get_contents(TEST_FIXTURE_PATH . '/Pinger/Drivers/Healthchecks/create.json'), true));
+
 
         $response = $driver->createCheckForEvent($event);
 

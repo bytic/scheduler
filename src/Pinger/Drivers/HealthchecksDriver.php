@@ -96,7 +96,7 @@ class HealthchecksDriver extends AbstractDriver
     {
         $data = [
             'name' => $event->getIdentifierHumanRead(),
-            'tags' => '',
+            'tags' => scheduler()->getIdentifier(),
             'desc' => $event->getSummaryForDisplay(),
             'timeout' => 86400,
             'grace' => 60,
