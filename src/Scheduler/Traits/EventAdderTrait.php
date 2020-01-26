@@ -46,9 +46,9 @@ trait EventAdderTrait
         $bin = Application::phpBinary();
         $command = $bin . ' ' . $script;
 
-        if (!file_exists($script)) {
-            throw new InvalidArgumentException('The script should be a valid path to a file.');
-        }
+//        if (!file_exists($script)) {
+//            throw new InvalidArgumentException('The script should be a valid path to a file.');
+//        }
         return $this->exec($command, $parameters);
     }
 
