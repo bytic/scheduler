@@ -56,7 +56,7 @@ class HealthchecksDriver extends AbstractDriver
             return $urlCached[$cacheKey];
         }
         $urlCached[$cacheKey] = $this->generateUrlForEvent($event);
-        cache()->put('scheduler-healthchecks',$urlCached);
+        cache()->put('scheduler-healthchecks', $urlCached);
         return $urlCached[$cacheKey];
     }
 
@@ -83,7 +83,7 @@ class HealthchecksDriver extends AbstractDriver
      */
     protected function generateChecks()
     {
-        $response = $this->request('GET','/api/v1/checks/');
+        $response = $this->request('GET', '/api/v1/checks/');
         return $response['checks'];
     }
 
@@ -102,7 +102,7 @@ class HealthchecksDriver extends AbstractDriver
             'schedule' => $event->getExpression(),
             'unique' => ["name"],
         ];
-        return $this->request('POST','/api/v1/checks/', $data);
+        return $this->request('POST', '/api/v1/checks/', $data);
     }
 
     /**
