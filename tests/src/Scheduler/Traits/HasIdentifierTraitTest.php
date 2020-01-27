@@ -15,7 +15,7 @@ class HasIdentifierTraitTest extends AbstractTest
     {
         /** @var Scheduler|\Mockery\MockInterface| $scheduler */
         $scheduler = \Mockery::mock(Scheduler::class)->makePartial()->shouldAllowMockingProtectedMethods();
-        $scheduler->shouldReceive('getConfigBase')->with('scheduler.name',\Mockery::any())->andReturn('my-name');
+        $scheduler->shouldReceive('getConfigBase')->with('scheduler.name', \Mockery::any())->andReturn('my-name');
 
         self::assertSame('my-name', $scheduler->getIdentifier());
     }

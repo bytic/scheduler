@@ -13,7 +13,6 @@ use Bytic\Scheduler\Tests\AbstractTest;
  */
 class EventAdderTest extends AbstractTest
 {
-
     public function test_after()
     {
         $scheduler = new Scheduler();
