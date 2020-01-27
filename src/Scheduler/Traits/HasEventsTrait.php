@@ -3,11 +3,8 @@
 namespace Bytic\Scheduler\Scheduler\Traits;
 
 use Bytic\Scheduler\Events\Event;
-use Bytic\Scheduler\Events\EventAdder;
 use Bytic\Scheduler\Events\EventCollection;
 use Bytic\Scheduler\Loader\EventsLoader;
-use Bytic\Scheduler\Scheduler;
-use Bytic\Scheduler\Scheduler\FileDetector;
 
 /**
  * Trait HasEventsTrait
@@ -19,6 +16,7 @@ trait HasEventsTrait
      * @var EventCollection
      */
     protected $events = null;
+    protected $eventsLoaded = false;
 
     protected $eventsByDriver = [];
 
@@ -43,14 +41,21 @@ trait HasEventsTrait
 
     protected function checkInitEvents()
     {
-        if ($this->events === null) {
-            $this->initEvents();
+        if ($this->eventsLoaded === true) {
+            return;
         }
+        if (count($this->events) > 0) {
+            $this->eventsLoaded = true;
+            return;
+        }
+
+        $this->initEvents();
+        $this->eventsLoaded = true;
+        return;
     }
 
     protected function initEvents()
     {
-        $this->events = new EventCollection();
         EventsLoader::loadEvents($this);
     }
 
@@ -60,6 +65,7 @@ trait HasEventsTrait
     public function setEvents(EventCollection $events)
     {
         $this->events = $events;
+        $this->eventsLoaded = true;
         $this->eventsByDriver = [];
         foreach ($events as $event) {
             $this->eventsByDriver[$event->getDriver()][] = $event->getIdentifier();

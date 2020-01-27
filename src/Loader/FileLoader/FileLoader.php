@@ -21,7 +21,7 @@ class FileLoader
         $file = (new FileDetector($scheduler))->getPath();
 
         /** @noinspection PhpIncludeInspection */
-        require_once $file;
+        require $file;
 
         return true;
     }

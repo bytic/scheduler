@@ -2,6 +2,8 @@
 
 namespace Bytic\Scheduler;
 
+use Bytic\Scheduler\Events\EventCollection;
+
 /**
  * Class Scheduler
  * @package Bytic\Scheduler
@@ -23,5 +25,6 @@ class Scheduler
      */
     public function __construct()
     {
+        $this->events = new EventCollection();
     }
 }

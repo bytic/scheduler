@@ -4,6 +4,7 @@ namespace Bytic\Scheduler\Scheduler\Traits;
 
 use ByTIC\Console\Application;
 use ByTIC\Console\Support\ProcessUtils;
+use Bytic\Scheduler\Events\Event;
 use Bytic\Scheduler\Events\EventAdder;
 use Bytic\Scheduler\Exception\InvalidArgumentException;
 use Nip\Container\Container;
@@ -46,10 +47,17 @@ trait EventAdderTrait
         $bin = Application::phpBinary();
         $command = $bin . ' ' . $script;
 
-//        if (!file_exists($script)) {
-//            throw new InvalidArgumentException('The script should be a valid path to a file.');
-//        }
-        return $this->exec($command, $parameters);
+        $adder = $this->exec($command, $parameters);
+        $adder->after(function (Event $event) use ($script) {
+            $cwd = $event->getWorkingDirectory();
+            $path = $cwd ? $cwd . DIRECTORY_SEPARATOR : '';
+            $path .= $script;
+
+            if (!file_exists($path)) {
+                throw new InvalidArgumentException('The script should be a valid path to a file.');
+            }
+        });
+        return $adder;
     }
 
     /**
