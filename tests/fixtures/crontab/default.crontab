@@ -1,0 +1,53 @@
+# Edit this file to introduce tasks to be run by cron.
+#.
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+#.
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').#.
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+#.
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+#.
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+#.
+# For more information see the manual pages of crontab(5) and cron(8)
+#.
+# m h  dom mon dow   command
+
+
+# REGISTER CRONS
+*       *       *       *       *       php /home/sportic/register/current/crons/cron-jobs.php >/dev/null 2>&1
+*       *       *       *       *       php /home/sportic/register/current/crons/fees-term.php >/dev/null 2>&1
+0,30    *       *       *       *       php /home/sportic/register/current/crons/carts.php >/dev/null 2>&1
+*       *       *       *       *       php /home/sportic/register/current/crons/event-newsletters.php >/dev/null 2>&1
+
+#  /home/km42/public_html/register/current/vendor/bin/bytic queue:consume register-entries.fifo
+
+# MAIN CRONS
+*          *          *          *          *          php /home/sportic/main/current/crons/emails.php >/dev/null 2>&1
+0           0           1           1           *          php /home/sportic/main/current/crons/emails-cleanup.php >/dev/null 2>&1
+0           0           1           1           *          php /home/sportic/main/current/crons/emails-compress.php >/dev/null 2>&1
+
+
+# RESULTS
+0          0          *          *          0              php /home/sportic/results/current/crons/athlete-results-stats.php       && curl -fsS --retry 3 https://hc-ping.com/c1e0bb11-bad1-4
+*          *          *          *          *              php /home/sportic/results/current/crons/cache-jobs.php                  && curl -fsS --retry 3 https://hc-ping.com/f1b7280f-f3c1-4
+*          *          *          *          *              php /home/sportic/results/current/crons/cleanup.php                     && curl -fsS --retry 3 https://hc-ping.com/b8809fa8-4c46-4
+0          0,12          *          *          *          php /home/sportic/results/current/crons/clubs-members.php               && curl -fsS --retry 3 https://hc-ping.com/7cb94e65-9783-4c79-
+*          *          *          *          *              php /home/sportic/results/current/crons/event-collections.php           && curl -fsS --retry 3 https://hc-ping.com/f7a90939-12e4-4
+*          *          *          *          *              php /home/sportic/results/current/crons/race_series-series_athletes.php && curl -fsS --retry 3 https://hc-ping.com/c5df556b-1687-4
+*          *          *          *          *              php /home/sportic/results/current/crons/race_series-series_categories.php && curl -fsS --retry 3 https://hc-ping.com/7de3254f-af0c
+*          *          *          *          *              php /home/sportic/results/current/crons/race_series-series_results.php  && curl -fsS --retry 3 https://hc-ping.com/076cf545-489e-4
+*          *          *          *          *              php /home/sportic/results/current/crons/stats-jobs-athletes-create.php  && curl -fsS --retry 3 https://hc-ping.com/0c6fed57-2a82-4
+*          *          *          *          *              php /home/sportic/results/current/crons/stats-jobs-process.php          && curl -fsS --retry 3 https://hc-ping.com/7453f73b-6229-4
+
+# Begin BYTIC cron generated tasks for [Team]
+* * * * * /home/sportic/team/releases/20200127091808//vendor/bin/bytic schedule:run-event -e eb588b3f61d4d079a304405446484c82
+# End BYTIC cron generated tasks for [Team]

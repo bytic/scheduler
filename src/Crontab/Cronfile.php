@@ -62,10 +62,19 @@ class Cronfile
     {
         $content = $this->header . PHP_EOL . $content . PHP_EOL . $this->footer;
 
-        if ($this->hasHeader && $this->hasFooter) {
-            $this->content = preg_replace("/^$header\s*$.*?^$footer\s*$/sm", $content, $this->content);
+        if ($this->isPresent()) {
+            $this->content = preg_replace("/".preg_quote($this->header, "/").".*?".preg_quote($this->footer, "/")."/si", $content, $this->content);
         } else {
             $this->content .= PHP_EOL . $content;
         }
+        $this->detectHeaderFooter();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPresent()
+    {
+        return $this->hasHeader === true && $this->hasFooter === true;
     }
 }
