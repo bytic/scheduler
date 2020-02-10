@@ -2,7 +2,7 @@
   "checks": [
     {
       "name": "Results # race_series-series_results.php",
-      "tags": "",
+      "tags": "bytic",
       "desc": "",
       "grace": 3600,
       "n_pings": 57887,

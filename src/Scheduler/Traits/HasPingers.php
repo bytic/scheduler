@@ -32,7 +32,6 @@ trait HasPingers
     {
         foreach ($this->eventsByPinger as $destination => $identifiers) {
             $eventCollection = $this->getEvents()->only($identifiers);
-
         }
     }
 

@@ -19,11 +19,13 @@ trait HasUriMethods
      */
     public function generateFullUri($path = '/', $query = null)
     {
+        $url = (strpos($path, 'http') === false) ? sprintf('%s' . $path, $this->getBaseUri()) : $path;
+
         $uri = $this->getUriFactory()
-            ->createUri(sprintf('%s' . $path, $this->getBaseUri()));
+            ->createUri($url);
 
         if (is_array($query)) {
-            $query =  $this->buildQuery($query);
+            $query = $this->buildQuery($query);
         }
         if (!empty($query)) {
             $uri = $uri->withQuery($query);
@@ -32,6 +34,10 @@ trait HasUriMethods
         return $uri;
     }
 
+    /**
+     * @param array $queryParams
+     * @return string
+     */
     protected function buildQuery(array $queryParams = []): string
     {
         $queryParams = array_map(

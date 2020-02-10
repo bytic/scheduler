@@ -3,7 +3,6 @@
 namespace Bytic\Scheduler\Console;
 
 use ByTIC\Console\Command;
-use Bytic\Scheduler\Scheduler\FileDetector;
 use Exception;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -31,15 +30,5 @@ class PublishCommand extends Command
         $scheduler->publish();
 
         return 0;
-    }
-
-    /**
-     * @param InputInterface $input
-     * @return array
-     */
-    protected function determineQueues(InputInterface $input)
-    {
-        $queue = $input->getArgument('queue-names');
-        return is_array($queue) ? $queue : [$queue];
     }
 }

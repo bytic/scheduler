@@ -3,6 +3,7 @@
 namespace Bytic\Scheduler\Pinger;
 
 use Bytic\Scheduler\Events\Event;
+use Bytic\Scheduler\Events\EventCollection;
 use Bytic\Scheduler\Pinger\Drivers\AbstractDriver;
 use Bytic\Scheduler\Pinger\Drivers\UrlDriver;
 use Nip\Container\Container;
@@ -15,7 +16,7 @@ class PingerManager
 {
     protected static $list = [
         'url' => Drivers\UrlDriver::class,
-        'healthchecks' => Drivers\HealthchecksDriver::class
+        'healthchecks' => Drivers\HealthchecksClient::class
     ];
 
     protected static $instances = [
@@ -33,6 +34,17 @@ class PingerManager
             $options['url'] = $destination;
         }
         $driver->ping($event, $options);
+    }
+
+
+    /**
+     * @param EventCollection $collection
+     * @param $driver
+     */
+    public static function publish(EventCollection $collection, $destination)
+    {
+        $driver = static::get($destination);
+        $driver->publish($collection);
     }
 
     /**

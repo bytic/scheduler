@@ -17,14 +17,14 @@ trait HasEndpoints
      * Send signed HTTP requests to the API server.
      *
      * @param string $method HTTP method (GET, POST, PUT or DELETE)
-     * @param string $path   Request path
-     * @param array  $params Additional request parameters
-     *
+     * @param string $path Request path
+     * @param null $payload
      * @return string|array
+     * @throws \Exception
      */
-    public function request($method, $path, array $params = [])
+    public function request($method, $path, $payload = null)
     {
-        $request = $this->buildRequest($method, $path, $params, []);
+        $request = $this->buildRequest($method, $path, $payload, []);
         $response = $this->executeRequest($request);
         return $this->decodeResponse($response);
     }
@@ -140,8 +140,12 @@ trait HasEndpoints
      */
     protected function buildRequestInstance($method, $uri, $headers, $body)
     {
-        $request = $this->getRequestFactory()->createRequest($method, $uri)
-            ->withBody($body);
+        $request = $this->getRequestFactory()->createRequest($method, $uri);
+
+        if ($body) {
+            $request->withBody($body);
+        }
+
         foreach ($headers as $name => $value) {
             $request = $request->withHeader($name, $value);
         }

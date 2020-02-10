@@ -3,6 +3,7 @@
 namespace Bytic\Scheduler\Pinger\Drivers;
 
 use Bytic\Scheduler\Events\Event;
+use Bytic\Scheduler\Events\EventCollection;
 use Bytic\Scheduler\Pinger\Drivers\Traits\HasHttpClient;
 
 /**
@@ -20,5 +21,12 @@ class UrlDriver extends AbstractDriver
     {
         $url = $options['url'];
         $this->pingUrl($url);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function publish(EventCollection $collection)
+    {
     }
 }

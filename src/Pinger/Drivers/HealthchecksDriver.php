@@ -3,8 +3,9 @@
 namespace Bytic\Scheduler\Pinger\Drivers;
 
 use Bytic\Scheduler\Events\Event;
-use Bytic\Scheduler\Pinger\Drivers\Traits\isApiDriver;
-use Psr\Http\Message\ResponseInterface;
+use Bytic\Scheduler\Events\EventCollection;
+use Bytic\Scheduler\Pinger\Drivers\Healthchecks\HealthchecksClient;
+use Bytic\Scheduler\Pinger\Drivers\Traits\HasHttpClient;
 
 /**
  * Class HealthchecksDriver
@@ -12,16 +13,31 @@ use Psr\Http\Message\ResponseInterface;
  */
 class HealthchecksDriver extends AbstractDriver
 {
-    use isApiDriver;
+    use HasHttpClient;
 
-    const AUTH_HEADER = 'X-Api-Key';
+    protected $client = null;
 
-    const BASE_URI = 'https://healthchecks.io';
+    /**
+     * @inheritDoc
+     */
+    public function __construct(array $config = [])
+    {
+        parent::__construct($config);
 
-    /** @var string */
-    protected $apiKey;
+        $this->client = new HealthchecksClient();
+        $this->client->populateFromConfig($config);
+    }
 
-    protected $checks = null;
+    /**
+     * @inheritDoc
+     */
+    public function publish(EventCollection $collection)
+    {
+        $this->client->deleteChecks();
+        foreach ($collection as $event) {
+            $this->determineUrlForEvent($event);
+        }
+    }
 
     /**
      * @inheritDoc
@@ -29,18 +45,18 @@ class HealthchecksDriver extends AbstractDriver
     public function ping(Event $event, $options = [])
     {
         $url = $this->determineUrlForEvent($event, $options);
-        $this->pingUrl($url);
-    }
 
-    /**
-     * @return |null
-     */
-    public function getChecks()
-    {
-        if ($this->checks === null) {
-            $this->checks = $this->generateChecks();
+        $trigger = isset($options['trigger']) ? $options['trigger'] : '';
+        switch ($trigger) {
+            case 'before':
+                $url .= '/start';
+                break;
+            case 'failure':
+                $url .= '/fail';
+                break;
         }
-        return $this->checks;
+
+        $this->pingUrl($url);
     }
 
     /**
@@ -56,7 +72,7 @@ class HealthchecksDriver extends AbstractDriver
         if (isset($urlCached[$cacheKey])) {
             return $urlCached[$cacheKey];
         }
-        $urlCached[$cacheKey] = $this->generateUrlForEvent($event);
+        $urlCached[$cacheKey] = $this->generateUrlForEvent($event, $options);
         cache()->put('scheduler-healthchecks', $urlCached);
         return $urlCached[$cacheKey];
     }
@@ -65,83 +81,17 @@ class HealthchecksDriver extends AbstractDriver
      * @param Event $event
      * @return string
      */
-    protected function generateUrlForEvent(Event $event)
+    protected function generateUrlForEvent(Event $event, $options = [])
     {
         $name = $event->getIdentifierHumanRead();
 
-        $checks = $this->getChecks();
+        $checks = $this->client->getChecks();
         foreach ($checks as $check) {
             if ($check['name'] == $name) {
                 return $check['ping_url'];
             }
         }
-        $check = $this->createCheckForEvent($event);
+        $check = $this->client->createCheckForEvent($event);
         return $check['ping_url'];
-    }
-
-    /**
-     * @return array
-     */
-    protected function generateChecks()
-    {
-        $response = $this->request('GET', '/api/v1/checks/');
-        return $response['checks'];
-    }
-
-    /**
-     * @param Event $event
-     * @return array
-     */
-    public function createCheckForEvent(Event $event)
-    {
-        $data = [
-            'name' => $event->getIdentifierHumanRead(),
-            'tags' => scheduler()->getIdentifier(),
-            'desc' => $event->getSummaryForDisplay(),
-            'timeout' => 86400,
-            'grace' => 60,
-            'schedule' => $event->getExpression(),
-            'unique' => ["name"],
-        ];
-        return $this->request('POST', '/api/v1/checks/', $data);
-    }
-
-    /**
-     * @param ResponseInterface $response
-     * @return string
-     */
-    protected function decodeResponse(ResponseInterface $response)
-    {
-        return json_decode((string) $response->getBody(), true);
-    }
-
-    /**
-     * @return array
-     * @noinspection PhpDocMissingThrowsInspection
-     */
-    protected function getHttpHeadersDefault()
-    {
-        if (empty($this->getApiKey())) {
-            throw new \Exception("HealthchecksDriver needs apiKey to perform requests");
-        }
-        return [
-            self::AUTH_HEADER => $this->apiKey,
-        ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function generateBaseUri(): string
-    {
-        return self::BASE_URI;
-    }
-
-    /**
-     * @return string
-     */
-    public function getApiKey(): string
-    {
-        return $this->apiKey;
     }
 }

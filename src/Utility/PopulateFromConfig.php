@@ -1,10 +1,10 @@
 <?php
 
-namespace Bytic\Scheduler\Pinger\Drivers\Traits;
+namespace Bytic\Scheduler\Utility;
 
 /**
  * Trait PopulateFromConfig
- * @package Bytic\Scheduler\Pinger\Drivers\Traits
+ * @package Bytic\Scheduler\Utility
  */
 trait PopulateFromConfig
 {
