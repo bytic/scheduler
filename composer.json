@@ -19,7 +19,7 @@
       "Bytic\\Scheduler\\": "src"
     },
     "files": [
-      "src/utility/general.php"
+      "src/Utility/general.php"
     ]
   },
   "autoload-dev": {

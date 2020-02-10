@@ -3,6 +3,7 @@
 namespace Bytic\Scheduler\Scheduler\Traits;
 
 use Bytic\Scheduler\Events\Event;
+use Bytic\Scheduler\Pinger\PingerManager;
 
 /**
  * Trait HasPingers
@@ -32,6 +33,7 @@ trait HasPingers
     {
         foreach ($this->eventsByPinger as $destination => $identifiers) {
             $eventCollection = $this->getEvents()->only($identifiers);
+            PingerManager::publish($eventCollection, $destination);
         }
     }
 

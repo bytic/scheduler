@@ -3,7 +3,7 @@
 namespace Bytic\Scheduler\Tests\Pinger;
 
 use Bytic\Scheduler\Events\Event;
-use Bytic\Scheduler\Pinger\Drivers\HealthchecksClient;
+use Bytic\Scheduler\Pinger\Drivers\HealthchecksDriver;
 use Bytic\Scheduler\Pinger\Drivers\UrlDriver;
 use Bytic\Scheduler\Pinger\PingerManager;
 use Bytic\Scheduler\Tests\AbstractTest;
@@ -33,10 +33,10 @@ class PingerManagerTest extends AbstractTest
     {
         $event = new Event('php foe');
 
-        $urlPinger = \Mockery::mock(HealthchecksClient::class)->makePartial();
+        $urlPinger = \Mockery::mock(HealthchecksDriver::class)->makePartial();
         $urlPinger->shouldReceive('ping')->withArgs([$event, []])->once();
 
-        Container::getInstance()->set(HealthchecksClient::class, $urlPinger);
+        Container::getInstance()->set(HealthchecksDriver::class, $urlPinger);
 
         PingerManager::ping('healthchecks', $event);
     }
@@ -49,7 +49,7 @@ class PingerManagerTest extends AbstractTest
         $manager::reset();
 
         $healthchecks = $manager->get('healthchecks');
-        self::assertInstanceOf(HealthchecksClient::class, $healthchecks);
-        self::assertSame('1111', $healthchecks->getApiKey());
+        self::assertInstanceOf(HealthchecksDriver::class, $healthchecks);
+        self::assertSame('1111', $healthchecks->getClient()->getApiKey());
     }
 }

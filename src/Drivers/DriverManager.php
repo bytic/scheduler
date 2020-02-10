@@ -12,7 +12,8 @@ use Nip\Container\Container;
 class DriverManager
 {
     protected static $list = [
-        'crontab' => CrontabDriver::class
+        'crontab' => CrontabDriver::class,
+        'internal' => InternalDriver::class,
     ];
 
     protected static $instances = [

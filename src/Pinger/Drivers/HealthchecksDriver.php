@@ -60,6 +60,14 @@ class HealthchecksDriver extends AbstractDriver
     }
 
     /**
+     * @return HealthchecksClient|null
+     */
+    public function getClient(): ?HealthchecksClient
+    {
+        return $this->client;
+    }
+
+    /**
      * @param Event $event
      * @param array $options
      * @return string

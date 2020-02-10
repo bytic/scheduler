@@ -16,7 +16,7 @@ class PingerManager
 {
     protected static $list = [
         'url' => Drivers\UrlDriver::class,
-        'healthchecks' => Drivers\HealthchecksClient::class
+        'healthchecks' => Drivers\HealthchecksDriver::class
     ];
 
     protected static $instances = [
@@ -39,7 +39,7 @@ class PingerManager
 
     /**
      * @param EventCollection $collection
-     * @param $driver
+     * @param $destination
      */
     public static function publish(EventCollection $collection, $destination)
     {
