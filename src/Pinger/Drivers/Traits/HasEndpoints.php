@@ -101,8 +101,8 @@ trait HasEndpoints
         return [
             'method' => $method,
             'url' => $url,
-            'headers' => $headers,
             'body' => $body,
+            'headers' => $headers,
         ];
     }
 
@@ -138,12 +138,12 @@ trait HasEndpoints
      * @param $body
      * @return RequestInterface
      */
-    protected function buildRequestInstance($method, $uri, $headers, $body)
+    protected function buildRequestInstance($method, $uri, $body,$headers)
     {
         $request = $this->getRequestFactory()->createRequest($method, $uri);
 
         if ($body) {
-            $request->withBody($body);
+            $request = $request->withBody($body);
         }
 
         foreach ($headers as $name => $value) {
