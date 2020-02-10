@@ -11,6 +11,8 @@ use Nip\Container\Container;
  */
 trait CanPing
 {
+    protected $pingers = [];
+
     /**
      * Register a callback to ping a given URL before the job runs.
      *
@@ -20,6 +22,8 @@ trait CanPing
      */
     public function pingBefore($destination, $options = [])
     {
+        $options['trigger'] = 'before';
+        $this->registerPing($destination, $options);
         return $this->before($this->pingCallback($destination, $options));
     }
 
@@ -46,6 +50,8 @@ trait CanPing
      */
     public function pingAfter($destination, $options = [])
     {
+        $options['trigger'] = 'after';
+        $this->registerPing($destination, $options);
         return $this->after($this->pingCallback($destination, $options));
     }
 
@@ -71,6 +77,8 @@ trait CanPing
      */
     public function pingOnSuccess($destination, $options = [])
     {
+        $options['trigger'] = 'success';
+        $this->registerPing($destination, $options);
         return $this->onSuccess($this->pingCallback($destination, $options));
     }
 
@@ -83,7 +91,17 @@ trait CanPing
      */
     public function pingOnFailure($destination, $options = [])
     {
+        $options['trigger'] = 'failure';
+        $this->registerPing($destination, $options);
         return $this->onFailure($this->pingCallback($destination, $options));
+    }
+
+    /**
+     * @return array
+     */
+    public function getPingers(): array
+    {
+        return $this->pingers;
     }
 
     /**
@@ -100,5 +118,14 @@ trait CanPing
             $manager = Container::getInstance()->get(PingerManager::class);
             $manager::ping($destination, $this, $options);
         };
+    }
+
+    /**
+     * @param $destination
+     * @param array $options
+     */
+    protected function registerPing($destination, $options = [])
+    {
+        $this->pingers[$destination][] = $options;
     }
 }

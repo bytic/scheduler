@@ -28,7 +28,7 @@ class HealthchecksDriver extends AbstractDriver
      */
     public function ping(Event $event, $options = [])
     {
-        $url = $this->determineUrlForEvent($event);
+        $url = $this->determineUrlForEvent($event, $options);
         $this->pingUrl($url);
     }
 
@@ -45,9 +45,10 @@ class HealthchecksDriver extends AbstractDriver
 
     /**
      * @param Event $event
+     * @param array $options
      * @return string
      */
-    protected function determineUrlForEvent(Event $event)
+    protected function determineUrlForEvent(Event $event, $options = [])
     {
         $cacheKey = $event->getIdentifier();
         $urlCached = cache()->get('scheduler-healthchecks');

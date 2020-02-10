@@ -19,4 +19,14 @@ class HasDriversTest extends AbstractTest
         $driver = $scheduler->getDriver('crontab');
         self::assertInstanceOf(CrontabDriver::class, $driver);
     }
+
+    public function test_onEventAddedDrivers()
+    {
+        $scheduler = new Scheduler();
+        $scheduler->php(TEST_FIXTURE_PATH . DIRECTORY_SEPARATOR . 'crons' . DIRECTORY_SEPARATOR . 'test_script.php');
+
+        $eventsByDriver = $scheduler->getEventsByDriver();
+        self::assertIsArray($eventsByDriver);
+        self::assertCount(1, $eventsByDriver);
+    }
 }

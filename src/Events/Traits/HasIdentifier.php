@@ -42,6 +42,9 @@ trait HasIdentifier
      */
     protected function generateIdentifier()
     {
-        return md5($this->getCommand() . serialize($this));
+        $properties = get_object_vars($this);
+        unset($properties['beforeCallbacks']);
+        unset($properties['afterCallbacks']);
+        return md5($this->getCommand() . serialize($properties));
     }
 }

@@ -3,9 +3,6 @@
 namespace Bytic\Scheduler\Pinger\Drivers;
 
 use Bytic\Scheduler\Events\Event;
-use Bytic\Scheduler\Pinger\Drivers\Traits\HasEndpoints;
-use Bytic\Scheduler\Pinger\Drivers\Traits\HasHttpClient;
-use Bytic\Scheduler\Pinger\Drivers\Traits\HasUriMethods;
 use Bytic\Scheduler\Pinger\Drivers\Traits\PopulateFromConfig;
 
 /**
@@ -23,6 +20,11 @@ abstract class AbstractDriver
     public function __construct(array $config = [])
     {
         $this->populateFromConfig($config);
+    }
+
+    public function register($scheduler)
+    {
+
     }
 
     /**

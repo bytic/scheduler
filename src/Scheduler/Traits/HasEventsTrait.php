@@ -18,7 +18,7 @@ trait HasEventsTrait
     protected $events = null;
     protected $eventsLoaded = false;
 
-    protected $eventsByDriver = [];
+    protected $eventsByPinger = [];
 
     /**
      * @return EventCollection
@@ -35,8 +35,7 @@ trait HasEventsTrait
     public function addEvent($event)
     {
         $this->events->add($event, $event->getIdentifier());
-
-        $this->eventsByDriver[$event->getDriver()][] = $event->getIdentifier();
+        $this->triggerCallbacks('onEventAdded', [$event]);
     }
 
     protected function checkInitEvents()
