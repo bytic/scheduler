@@ -66,8 +66,9 @@ trait HasEventsTrait
         $this->events = $events;
         $this->eventsLoaded = true;
         $this->eventsByDriver = [];
+        $this->eventsByPinger = [];
         foreach ($events as $event) {
-            $this->eventsByDriver[$event->getDriver()][] = $event->getIdentifier();
+            $this->triggerCallbacks('onEventAdded', [$event]);
         }
     }
 }

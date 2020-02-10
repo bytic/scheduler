@@ -2,11 +2,13 @@
 
 namespace Bytic\Scheduler\Events;
 
+use Serializable;
+
 /**
  * Class Event
  * @package Bytic\Scheduler\Events
  */
-class Event
+class Event implements Serializable
 {
     use Traits\CanPing;
     use Traits\HasCallbacks;
@@ -19,6 +21,7 @@ class Event
     use Traits\HasUser;
     use Traits\HasWorkingDirectory;
     use Traits\IsExecutable;
+    use Traits\IsSerializable;
     use Traits\ManagesFrequencies;
 
     /**

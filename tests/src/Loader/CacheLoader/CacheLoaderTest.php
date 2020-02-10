@@ -26,6 +26,7 @@ class CacheLoaderTest extends AbstractTest
         $events->add($event1);
 
         $event2 = new Event('php foe2');
+        $event2->after(function () { return 2;});
         $events->add($event2);
 
         $scheduler->setEvents($events);
