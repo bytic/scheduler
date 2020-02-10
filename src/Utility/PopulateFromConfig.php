@@ -2,6 +2,8 @@
 
 namespace Bytic\Scheduler\Utility;
 
+use Iterator;
+
 /**
  * Trait PopulateFromConfig
  * @package Bytic\Scheduler\Utility
@@ -9,9 +11,9 @@ namespace Bytic\Scheduler\Utility;
 trait PopulateFromConfig
 {
     /**
-     * @param array $config
+     * @param array|Iterator $config
      */
-    public function populateFromConfig(array $config)
+    public function populateFromConfig($config)
     {
         foreach ($config as $name => $value) {
             $this->{$name} = $value;

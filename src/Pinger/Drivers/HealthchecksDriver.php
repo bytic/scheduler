@@ -20,7 +20,7 @@ class HealthchecksDriver extends AbstractDriver
     /**
      * @inheritDoc
      */
-    public function __construct(array $config = [])
+    public function __construct($config = [])
     {
         parent::__construct($config);
 

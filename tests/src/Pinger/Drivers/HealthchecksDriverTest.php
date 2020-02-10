@@ -6,6 +6,7 @@ use Bytic\Scheduler\Events\Event;
 use Bytic\Scheduler\Pinger\Drivers\HealthchecksDriver;
 use Bytic\Scheduler\Tests\AbstractTest;
 use Mockery\Mock;
+use Nip\Config\Config;
 
 /**
  * Class HealthchecksDriverTest
@@ -13,6 +14,23 @@ use Mockery\Mock;
  */
 class HealthchecksDriverTest extends AbstractTest
 {
+
+    public function test_construct_with_config()
+    {
+        $config = new Config(['apiKey' => 999]);
+
+        $driver = new HealthchecksDriver($config);
+        self::assertEquals(999, $driver->getClient()->getApiKey());
+    }
+
+    public function test_construct_with_array()
+    {
+        $config = ['apiKey' => 999];
+
+        $driver = new HealthchecksDriver($config);
+        self::assertEquals(999, $driver->getClient()->getApiKey());
+    }
+
     /**
      * @dataProvider data_ping_append_url
      */
