@@ -44,7 +44,7 @@ class HealthchecksClientTest extends AbstractTest
         $event->description('my cron desc');
 
         $scheduler = new Scheduler();
-        $scheduler->setIdentifier('MYSC');
+        $scheduler->setIdentifier('bytic');
         Container::getInstance()->set('scheduler', $scheduler);
 
         $driver = $this->newHealthchecksClientMock();
@@ -53,10 +53,10 @@ class HealthchecksClientTest extends AbstractTest
                 if (!is_array($data)) {
                     return false;
                 }
-                if ($data['name'] != 'MYSC # php foe') {
+                if ($data['name'] != 'bytic # php foe') {
                     return false;
                 }
-                if ($data['tags'] != 'MYSC') {
+                if ($data['tags'] != 'bytic') {
                     return false;
                 }
                 return true;
@@ -68,6 +68,7 @@ class HealthchecksClientTest extends AbstractTest
         $response = $driver->createCheckForEvent($event);
 
         self::assertIsArray($response);
+        self::assertCount(13, $response);
         self::assertArrayHasKey('desc', $response);
         self::assertArrayHasKey('update_url', $response);
     }
