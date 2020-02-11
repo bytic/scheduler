@@ -45,6 +45,14 @@ class HealthchecksClient
     }
 
     /**
+     * @param $url
+     */
+    public function pingUrl($url)
+    {
+        $this->getClient()->get($url);
+    }
+
+    /**
      * @return array
      */
     public function getChecks()

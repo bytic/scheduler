@@ -5,7 +5,6 @@ namespace Bytic\Scheduler\Pinger\Drivers;
 use Bytic\Scheduler\Events\Event;
 use Bytic\Scheduler\Events\EventCollection;
 use Bytic\Scheduler\Pinger\Drivers\Healthchecks\HealthchecksClient;
-use Bytic\Scheduler\Pinger\Drivers\Traits\HasHttpClient;
 
 /**
  * Class HealthchecksDriver
@@ -13,8 +12,6 @@ use Bytic\Scheduler\Pinger\Drivers\Traits\HasHttpClient;
  */
 class HealthchecksDriver extends AbstractDriver
 {
-    use HasHttpClient;
-
     protected $client = null;
 
     /**
@@ -56,7 +53,7 @@ class HealthchecksDriver extends AbstractDriver
                 break;
         }
 
-        $this->pingUrl($url);
+        $this->getClient()->pingUrl($url);
     }
 
     /**
