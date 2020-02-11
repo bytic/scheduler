@@ -68,7 +68,7 @@ class HealthchecksClientTest extends AbstractTest
         $response = $driver->createCheckForEvent($event);
 
         self::assertIsArray($response);
-        self::assertCount(13, $response);
+        self::assertGreaterThanOrEqual(13, count($response));
         self::assertArrayHasKey('desc', $response);
         self::assertArrayHasKey('update_url', $response);
     }

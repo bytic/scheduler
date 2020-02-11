@@ -14,7 +14,9 @@ use Psr\Http\Message\ResponseInterface;
  */
 class HealthchecksClient
 {
-    use isApiDriver;
+    use isApiDriver {
+        buildRequestValues as buildRequestValuesTrait;
+    }
     use PopulateFromConfig;
 
     const AUTH_HEADER = 'X-Api-Key';
@@ -64,7 +66,7 @@ class HealthchecksClient
             'tags' => $this->getIdentifier(),
             'desc' => $event->getSummaryForDisplay(),
             'timeout' => 86400,
-            'grace' => 60,
+            'grace' => 3600,
             'schedule' => $event->getExpression(),
             'unique' => ["name"],
         ];
@@ -94,6 +96,19 @@ class HealthchecksClient
     protected function decodeResponse(ResponseInterface $response)
     {
         return json_decode((string)$response->getBody(), true);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function buildRequestValues($method, $path, $payload, $headers)
+    {
+        $response = $this->buildRequestValuesTrait($method, $path, $payload, $headers);
+        if ('PUT' === $response['method'] || 'POST' === $response['method']) {
+            $response['headers']['Content-Type'] = 'Content-Type:application/json; charset=utf-8';
+            $response['body'] = $this->getStreamFactory()->createStream(json_encode($payload));
+        }
+        return $response;
     }
 
     /**

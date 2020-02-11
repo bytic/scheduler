@@ -94,7 +94,8 @@ trait HasEndpoints
         $headers = $this->getHttpHeaders($headers);
 
         if ('PUT' === $method || 'POST' === $method) {
-            $body = $this->getStreamFactory()->createStream(http_build_query($body, '', '&'));
+            $data = http_build_query($body, '', '&');
+            $body = $this->getStreamFactory()->createStream($data);
             $headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8';
         }
 
