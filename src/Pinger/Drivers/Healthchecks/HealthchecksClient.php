@@ -49,7 +49,7 @@ class HealthchecksClient
      */
     public function pingUrl($url)
     {
-        $this->getClient()->get($url);
+        $this->request('GET', $url);
     }
 
     /**

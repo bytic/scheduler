@@ -19,7 +19,7 @@ class EventRunner
 
     /**
      * @param OutputInterface $output
-     * @param Event $event
+     * @param EventCollection $collection
      */
     public function handle(OutputInterface $output, EventCollection $collection)
     {
@@ -43,7 +43,7 @@ class EventRunner
      */
     protected function start(Event $event): void
     {
-        $event->outputStream = ($this->invoke($event->beforeCallbacks()));
+        $event->outputStream = $this->invoke($event->beforeCallbacks(), [$event]);
         $event->start();
     }
 
@@ -60,7 +60,7 @@ class EventRunner
                 }
 
                 $event->outputStream .= $event->wholeOutput();
-                $event->outputStream .= $this->invoke($event->afterCallbacks());
+                $event->outputStream .= $this->invoke($event->afterCallbacks(), [$event]);
 
                 $this->events->unset($eventKey);
             }
@@ -88,7 +88,10 @@ class EventRunner
     }
 
 
-    /** @return string */
+    /**
+     * @param Event $event
+     * @return string
+     */
     protected function formatEventOutput(Event $event)
     {
         return $event->getSummaryForDisplay()

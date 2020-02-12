@@ -5,10 +5,13 @@ namespace Bytic\Scheduler\Events\Traits;
 use Bytic\Scheduler\Runner\Invoker;
 use Closure;
 use Nip\Container\Container;
+use Symfony\Component\Process\Process;
 
 /**
  * Trait HasCallbacks
  * @package Bytic\Scheduler\Events\Traits
+ *
+ * @method Process getProcess()
  */
 trait HasCallbacks
 {
@@ -31,7 +34,7 @@ trait HasCallbacks
     /**
      * Register a callback to be called before the operation.
      *
-     * @param \Closure $callback
+     * @param Closure $callback
      * @return $this
      */
     public function before(Closure $callback)
@@ -43,7 +46,7 @@ trait HasCallbacks
     /**
      * Register a callback to be called after the operation.
      *
-     * @param \Closure $callback
+     * @param Closure $callback
      * @return $this
      */
     public function after(Closure $callback)
@@ -54,7 +57,7 @@ trait HasCallbacks
     /**
      * Register a callback to be called after the operation.
      *
-     * @param \Closure $callback
+     * @param Closure $callback
      * @return $this
      */
     public function then(Closure $callback)
@@ -66,7 +69,7 @@ trait HasCallbacks
     /**
      * Return all registered before callbacks.
      *
-     * @return \Closure[]
+     * @return Closure[]
      */
     public function beforeCallbacks()
     {
@@ -76,7 +79,7 @@ trait HasCallbacks
     /**
      * Return all registered after callbacks.
      *
-     * @return \Closure[]
+     * @return Closure[]
      */
     public function afterCallbacks()
     {
@@ -86,14 +89,14 @@ trait HasCallbacks
     /**
      * Register a callback to be called if the operation succeeds.
      *
-     * @param \Closure $callback
+     * @param Closure $callback
      * @return $this
      */
     public function onSuccess(Closure $callback)
     {
         return $this->then(function () use ($callback) {
             if ($this->getProcess()->isSuccessful()) {
-                Invoker::call($callback, [], true);
+                Invoker::call($callback, [$this], true);
             }
         });
     }
@@ -101,14 +104,14 @@ trait HasCallbacks
     /**
      * Register a callback to be called if the operation fails.
      *
-     * @param \Closure $callback
+     * @param Closure $callback
      * @return $this
      */
     public function onFailure(Closure $callback)
     {
         return $this->then(function () use ($callback) {
             if (!$this->getProcess()->isSuccessful()) {
-                Invoker::call($callback, [], true);
+                Invoker::call($callback, [$this], true);
             }
         });
     }

@@ -53,6 +53,11 @@ class HealthchecksDriver extends AbstractDriver
                 break;
         }
 
+        $this->pingUrl($url);
+    }
+
+    protected function pingUrl($url)
+    {
         $this->getClient()->pingUrl($url);
     }
 
