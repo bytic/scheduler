@@ -39,7 +39,7 @@ class IsSerializableTest extends AbstractTest
 
     public function test_serialize_unserialize_with_callbacks()
     {
-        $file = TEST_FIXTURE_PATH . '\cache\scheduler-callback-test.php';
+        $file = TEST_FIXTURE_PATH . '/cache/scheduler-callback-test.php';
 //        $event = new Event('php -v');
 //        $event->pingBefore('healthchecks');
 //        $event->pingAfter('healthchecks');
