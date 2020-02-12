@@ -4,7 +4,6 @@ namespace Bytic\Scheduler\Events\Traits;
 
 use Bytic\Scheduler\Runner\Invoker;
 use Closure;
-use Nip\Container\Container;
 use Symfony\Component\Process\Process;
 
 /**
@@ -94,7 +93,7 @@ trait HasCallbacks
      */
     public function onSuccess(Closure $callback)
     {
-        return $this->then(function () use ($callback) {
+        return $this->then(function ($event = null) use ($callback) {
             if ($this->getProcess()->isSuccessful()) {
                 Invoker::call($callback, [$this], true);
             }
@@ -114,5 +113,41 @@ trait HasCallbacks
                 Invoker::call($callback, [$this], true);
             }
         });
+    }
+
+    /**
+     * @param array $parameters
+     * @return string
+     */
+    public function invokeBeforeCallbacks( array $parameters = [])
+    {
+        return $this->invokeCallbacks( $this->beforeCallbacks(), $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return string
+     */
+    public function invokeAfterCallbacks( array $parameters = [])
+    {
+        return $this->invokeCallbacks( $this->afterCallbacks(), $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return string
+     */
+    protected function invokeCallbacks($callbacks, array $parameters = [])
+    {
+        $output = '';
+        foreach ($callbacks as $callback) {
+            /** @var Closure $callback */
+            if ($callback instanceof  Closure) {
+                $callback = Closure::bind($callback, $this);
+            }
+            // Invoke the callback with buffering enabled
+            $output .= Invoker::call($callback, $parameters, true);
+        }
+        return $output;
     }
 }

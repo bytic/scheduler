@@ -28,7 +28,7 @@ class EventRunner
         $output->writeln('<info>START running [' . count($collection) . '] events</info>');
 
         foreach ($collection as $event) {
-            $output->writeln('<info>Running scheduled command:</info> ' . $event->getSummaryForDisplay());
+            $output->writeln('<info>Running scheduled command:</info> ' . $this->formatEventOutput($event));
             $this->start($event);
         }
 
@@ -43,7 +43,7 @@ class EventRunner
      */
     protected function start(Event $event): void
     {
-        $event->outputStream = $this->invoke($event->beforeCallbacks(), [$event]);
+        $event->outputStream = $event->invokeBeforeCallbacks();
         $event->start();
     }
 
@@ -60,7 +60,7 @@ class EventRunner
                 }
 
                 $event->outputStream .= $event->wholeOutput();
-                $event->outputStream .= $this->invoke($event->afterCallbacks(), [$event]);
+                $event->outputStream .= $event->invokeAfterCallbacks();
 
                 $this->events->unset($eventKey);
             }
