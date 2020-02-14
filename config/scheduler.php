@@ -11,7 +11,7 @@ return [
 
     'pingers' => [
         'healthchecks' => [
-            'apiKey' => '',
+            'apiKey' => env('HEALTHCHECKS_API', ''),
         ]
     ]
 ];
