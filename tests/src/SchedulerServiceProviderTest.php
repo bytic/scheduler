@@ -15,6 +15,7 @@ class SchedulerServiceProviderTest extends AbstractTest
     public function test_registerCrontabDriver_get_identifier_from_scheduler()
     {
         $provider = new SchedulerServiceProvider();
+        $provider->initContainer();
 
         $scheduler = new Scheduler();
         $scheduler->setIdentifier('MYCRON');

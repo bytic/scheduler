@@ -48,7 +48,7 @@ class PingerManagerTest extends AbstractTest
         $manager->shouldReceive('driverConfig')->with('healthchecks')->once()->andReturn(['apiKey' => '1111']);
         $manager::reset();
 
-        $healthchecks = $manager->get('healthchecks');
+        $healthchecks = $manager::get('healthchecks');
         self::assertInstanceOf(HealthchecksDriver::class, $healthchecks);
         self::assertSame('1111', $healthchecks->getClient()->getApiKey());
     }

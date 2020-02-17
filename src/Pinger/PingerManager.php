@@ -81,7 +81,7 @@ class PingerManager
         if (class_exists(Container::class)) {
             $container = Container::getInstance();
             if ($container instanceof Container) {
-                return $container->get($class, [$config]);
+                return $container->get($class, ['config' => $config]);
             }
         }
         return new $class($config);
