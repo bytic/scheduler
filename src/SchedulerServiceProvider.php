@@ -5,7 +5,7 @@ namespace Bytic\Scheduler;
 use Bytic\Scheduler\Console\PublishCommand;
 use Bytic\Scheduler\Console\RunEventCommand;
 use Bytic\Scheduler\Drivers\CrontabDriver;
-use Nip\Container\ServiceProvider\AbstractSignatureServiceProvider;
+use Nip\Container\ServiceProviders\Providers\AbstractSignatureServiceProvider;
 
 /**
  * Class SchedulerServiceProvider
