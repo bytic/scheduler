@@ -4,6 +4,7 @@ namespace Bytic\Scheduler\Pinger;
 
 use Bytic\Scheduler\Events\Event;
 use Bytic\Scheduler\Events\EventCollection;
+use Bytic\Scheduler\Events\Traits\CanPing;
 use Bytic\Scheduler\Pinger\Drivers\AbstractDriver;
 use Bytic\Scheduler\Pinger\Drivers\UrlDriver;
 use Nip\Container\Container;
@@ -24,7 +25,7 @@ class PingerManager
 
     /**
      * @param string $destination
-     * @param Event $event
+     * @param Event|CanPing $event
      * @param array $options
      */
     public static function ping(string $destination, Event $event, $options = [])

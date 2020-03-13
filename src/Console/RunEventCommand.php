@@ -59,7 +59,6 @@ class RunEventCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $args = [];
         /** @var string $closure */
         $eventId = $input->getOption('event');
 

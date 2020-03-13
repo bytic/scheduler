@@ -3,6 +3,7 @@
 namespace Bytic\Scheduler\Events\Traits;
 
 use Bytic\Scheduler\Pinger\PingerManager;
+use Closure;
 use Nip\Container\Container;
 
 /**
@@ -32,7 +33,6 @@ trait CanPing
      *
      * @param bool $value
      * @param string $destination
-     * @param $
      * @param array $options
      * @return $this
      */
@@ -109,7 +109,7 @@ trait CanPing
      *
      * @param string $destination
      * @param array $options
-     * @return \Closure
+     * @return Closure
      */
     protected function pingCallback($destination, $options = [])
     {
@@ -128,4 +128,16 @@ trait CanPing
     {
         $this->pingers[$destination][] = $options;
     }
+
+    /**
+     * @param Closure $callback
+     * @return mixed
+     */
+    abstract public function before(Closure $callback);
+
+    /**
+     * @param Closure $callback
+     * @return mixed
+     */
+    abstract public function onFailure(Closure $callback);
 }

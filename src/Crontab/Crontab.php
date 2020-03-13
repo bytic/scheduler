@@ -22,7 +22,7 @@ class Crontab
      */
     public function __construct($identifier = null)
     {
-        if ($identifier) {
+        if ($identifier !== null && !empty($identifier)) {
             $this->setIdentifier($identifier);
         }
     }
