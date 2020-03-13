@@ -38,6 +38,17 @@ class HealthchecksClientTest extends AbstractTest
         self::assertCount(1, $checks);
     }
 
+
+    public function test_setEndpointFromConfig()
+    {
+        $driver = $this->newHealthchecksClientMock();
+        self::assertSame('https://healthchecks.io', $driver->getBaseUri());
+
+        $driver = $this->newHealthchecksClientMock();
+        $driver->populateFromConfig(['endpoint' => 'https://health.sportic.ro']);
+        self::assertSame('https://health.sportic.ro', $driver->getBaseUri());
+    }
+
     public function test_createCheckForEvent()
     {
         $event = new Event('php foe');

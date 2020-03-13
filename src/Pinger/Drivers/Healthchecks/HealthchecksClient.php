@@ -24,6 +24,9 @@ class HealthchecksClient
     const BASE_URI = 'https://healthchecks.io';
 
     /** @var string */
+    protected $endpoint = null;
+
+    /** @var string */
     protected $apiKey;
 
     protected $checks = null;
@@ -36,6 +39,9 @@ class HealthchecksClient
         return $this->apiKey;
     }
 
+    /**
+     * @throws Exception
+     */
     public function deleteChecks()
     {
         $checks = $this->getChecks();
@@ -46,6 +52,7 @@ class HealthchecksClient
 
     /**
      * @param $url
+     * @throws Exception
      */
     public function pingUrl($url)
     {
@@ -54,6 +61,7 @@ class HealthchecksClient
 
     /**
      * @return array
+     * @throws Exception
      */
     public function getChecks()
     {
@@ -66,6 +74,7 @@ class HealthchecksClient
     /**
      * @param Event $event
      * @return array
+     * @throws Exception
      */
     public function createCheckForEvent(Event $event)
     {
@@ -83,6 +92,7 @@ class HealthchecksClient
 
     /**
      * @return array
+     * @throws Exception
      */
     protected function generateChecks()
     {
@@ -146,6 +156,10 @@ class HealthchecksClient
      */
     protected function generateBaseUri(): string
     {
+        if ($this->endpoint) {
+            return $this->endpoint;
+        }
         return self::BASE_URI;
     }
+
 }
