@@ -3,6 +3,7 @@
 namespace Bytic\Scheduler\Pinger\Drivers\Healthchecks;
 
 use Bytic\Scheduler\Events\Event;
+use Bytic\Scheduler\Helper;
 use Bytic\Scheduler\Pinger\Drivers\Traits\isApiDriver;
 use Bytic\Scheduler\Utility\PopulateFromConfig;
 use Exception;
@@ -87,6 +88,10 @@ class HealthchecksClient
             'schedule' => $event->getExpression(),
             'unique' => ["name"],
         ];
+
+        $basePath = Helper::getBasePath();
+        $data['name'] = str_replace($basePath, '', $data['name']);
+
         return $this->request('POST', '/api/v1/checks/', $data);
     }
 
