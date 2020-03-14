@@ -21,7 +21,7 @@ trait HasEventsTrait
     protected $eventsByPinger = [];
 
     /**
-     * @return EventCollection
+     * @return EventCollection|Event[]
      */
     public function getEvents(): EventCollection
     {
