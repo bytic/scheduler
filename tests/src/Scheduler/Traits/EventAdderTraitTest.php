@@ -51,7 +51,7 @@ class EventAdderTraitTest extends AbstractTest
         self::assertStringContainsString('/bin/apache restart', $event->getCommand());
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

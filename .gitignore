@@ -1,4 +1,8 @@
 .idea/workspace.xml
+.phpunit.result.cache
+
 /tests/.env
+
 /vendor/
+
 composer.lock
