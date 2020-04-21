@@ -16,7 +16,6 @@ trait HasReaderTrait
      */
     protected function getCronfile($user = null)
     {
-        $crontab = $this->readRaw($user);
         return new Cronfile(
             $this->readRaw($user),
             $this->getHeaderComment(),

@@ -40,7 +40,7 @@ trait HasWriterTrait
 
     /**
      * @param $content
-     * @param null $user
+     * @param null|string $user
      * @return mixed
      */
     protected function generateCrontabContent($content, $user = null)

@@ -7,6 +7,7 @@ use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use Http\Message\StreamFactory;
 use Http\Message\UriFactory;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
@@ -38,7 +39,7 @@ trait HasHttpClient
     protected $streamFactory;
 
     /**
-     * @return HttpClient
+     * @return HttpClient|ClientInterface
      */
     public function getClient()
     {
@@ -49,7 +50,7 @@ trait HasHttpClient
     }
 
     /**
-     * @param HttpClient $client
+     * @param HttpClient|ClientInterface $client
      */
     public function setClient($client): void
     {
@@ -97,7 +98,7 @@ trait HasHttpClient
     }
 
     /**
-     * @return StreamFactoryInterface
+     * @return StreamFactoryInterface|StreamFactory
      */
     public function getStreamFactory(): StreamFactoryInterface
     {
@@ -108,7 +109,7 @@ trait HasHttpClient
     }
 
     /**
-     * @param StreamFactoryInterface $streamFactory
+     * @param StreamFactoryInterface|StreamFactory $streamFactory
      */
     public function setStreamFactory(StreamFactoryInterface $streamFactory): void
     {

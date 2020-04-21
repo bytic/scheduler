@@ -3,7 +3,6 @@
 namespace Bytic\Scheduler\Tests;
 
 use Mockery as m;
-use Nip\Container\Container;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -12,15 +11,15 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class AbstractTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         \Nip\Container\Container::setInstance(new \Nip\Container\Container());
-        @unlink(CACHE_PATH. '/scheduler.php');
+        @unlink(CACHE_PATH . '/scheduler.php');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->addToAssertionCount(

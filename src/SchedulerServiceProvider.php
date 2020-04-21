@@ -2,6 +2,7 @@
 
 namespace Bytic\Scheduler;
 
+use Bytic\Scheduler\Console\ListCommand;
 use Bytic\Scheduler\Console\PublishCommand;
 use Bytic\Scheduler\Console\RunEventCommand;
 use Bytic\Scheduler\Drivers\CrontabDriver;
@@ -49,6 +50,7 @@ class SchedulerServiceProvider extends AbstractSignatureServiceProvider
     protected function registerCommands()
     {
         $this->commands(
+            ListCommand::class,
             PublishCommand::class,
             RunEventCommand::class
         );
