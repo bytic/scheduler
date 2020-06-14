@@ -21,7 +21,7 @@ class HasWriterTraitTest extends AbstractTest
 
         $crontab->shouldReceive('runCommand')
             ->once()
-            ->andReturn(new Process('dev/null'))
+            ->andReturn(new Process(['dev/null']))
             ->with(\Mockery::on(function ($argument) {
                 if (!file_exists($argument)) {
                     return false;
