@@ -74,7 +74,7 @@ class PingerManager
         $class = static::$list[$driver];
         $config = static::driverConfig($driver);
 
-        $container = function_exists('app') ? app() : class_exists(Container::class) ? Container::getInstance() : null;
+        $container = function_exists('app') ? app() : (class_exists(Container::class) ? Container::getInstance() : null);
         if ($container instanceof Container) {
             return $container->get($class, ['config' => $config]);
         }
