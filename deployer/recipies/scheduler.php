@@ -7,7 +7,8 @@ desc('Publish schedule events');
 task('bytic:scheduler:publish', function () {
     cd('{{release_path}}');
 
-    $byticCmd = get('bytic_get_cmd')('schedule:register', []);
+    $bytic = get('bin/bytic');
+    $byticCmd = "$bytic schedule:register";
 
     run($byticCmd);
 
