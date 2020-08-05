@@ -15,6 +15,17 @@ trait CanPing
     protected $pingers = [];
 
     /**
+     * @param $destination
+     * @param array $options
+     */
+    public function pingOnLifecycle($destination, $options = [])
+    {
+        $this->pingBefore($destination, $options);
+        $this->pingOnFailure($destination, $options);
+        $this->pingOnSuccess($destination, $options);
+    }
+
+    /**
      * Register a callback to ping a given URL before the job runs.
      *
      * @param string $destination

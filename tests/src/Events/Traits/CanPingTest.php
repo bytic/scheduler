@@ -11,6 +11,19 @@ use Bytic\Scheduler\Tests\AbstractTest;
  */
 class CanPingTest extends AbstractTest
 {
+
+    public function test_pingOnLifecycle()
+    {
+        $event = new Event('php foe');
+        $event->pingOnLifecycle('test');
+
+        $callbacks = $event->beforeCallbacks();
+        self::assertCount(1, $callbacks);
+
+        $callbacks = $event->afterCallbacks();
+        self::assertCount(2, $callbacks);
+    }
+    
     public function test_pingBefore()
     {
         $event = new Event('php foe');
