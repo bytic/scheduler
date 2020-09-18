@@ -8,7 +8,6 @@ namespace Bytic\Scheduler\Events\Traits;
  */
 trait HasOutput
 {
-
     /**
      * The location that output should be sent to.
      *

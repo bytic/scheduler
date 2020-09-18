@@ -14,7 +14,6 @@ use Symfony\Component\Process\Process;
  */
 trait HasCallbacks
 {
-
     /**
      * The array of callbacks to be run before the event is started.
      *

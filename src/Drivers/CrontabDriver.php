@@ -81,6 +81,6 @@ class CrontabDriver extends AbstractDriver
      */
     public function generateCommentForEvent(Event $event)
     {
-        return '# Event ['. $event->getSummaryForDisplay() . ']';
+        return '# Event [' . $event->getSummaryForDisplay() . ']';
     }
 }

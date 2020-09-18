@@ -2,7 +2,7 @@
 
 namespace Bytic\Scheduler\Exception;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * Class InvalidIdentifierException

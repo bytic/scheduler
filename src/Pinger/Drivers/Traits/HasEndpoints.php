@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpDocMissingThrowsInspection */
+<?php
+
+/** @noinspection PhpDocMissingThrowsInspection */
 
 namespace Bytic\Scheduler\Pinger\Drivers\Traits;
 
@@ -12,7 +14,6 @@ use Psr\Http\Message\ResponseInterface;
  */
 trait HasEndpoints
 {
-
     /**
      * Send signed HTTP requests to the API server.
      *

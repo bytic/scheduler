@@ -22,7 +22,7 @@ class CanPingTest extends AbstractTest
         $callbacks = $event->afterCallbacks();
         self::assertCount(2, $callbacks);
     }
-    
+
     public function test_pingBefore()
     {
         $event = new Event('php foe');

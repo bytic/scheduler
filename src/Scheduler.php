@@ -22,7 +22,7 @@ class Scheduler
     /**
      * @var string Library version, used for setting User-Agent
      */
-    const VERSION = '0.9';
+    public const VERSION = '0.9';
 
     /**
      * Scheduler constructor.

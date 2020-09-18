@@ -10,7 +10,6 @@ use Bytic\Scheduler\Exception\InvalidArgumentException;
  */
 trait HasCronExpression
 {
-
     /**
      * The cron expression representing the event's frequency.
      *

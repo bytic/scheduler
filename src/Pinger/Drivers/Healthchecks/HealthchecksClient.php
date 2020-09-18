@@ -20,9 +20,9 @@ class HealthchecksClient
     }
     use PopulateFromConfig;
 
-    const AUTH_HEADER = 'X-Api-Key';
+    public const AUTH_HEADER = 'X-Api-Key';
 
-    const BASE_URI = 'https://healthchecks.io';
+    public const BASE_URI = 'https://healthchecks.io';
 
     /** @var string */
     protected $endpoint = null;
