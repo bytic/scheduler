@@ -2,7 +2,8 @@
 
 namespace Bytic\Scheduler\Events\Traits;
 
-use function Opis\Closure\{serialize as s, unserialize as u};
+use function Opis\Closure\serialize as s;
+use function Opis\Closure\unserialize as u;
 
 /**
  * Trait IsSerializable

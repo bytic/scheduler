@@ -21,8 +21,10 @@ class HealthchecksClientTest extends AbstractTest
         $driver->shouldReceive('executeRequest')
             ->andReturn($this->newResponse(file_get_contents(TEST_FIXTURE_PATH . '/Pinger/Drivers/Healthchecks/checks.json')));
 
-        $driver->shouldReceive('request')->with('DELETE',
-            'https://healthchecks.io/api/v1/checks/076cf545-9999-9999-9999-999999999999');
+        $driver->shouldReceive('request')->with(
+            'DELETE',
+            'https://healthchecks.io/api/v1/checks/076cf545-9999-9999-9999-999999999999'
+        );
 
         $driver->deleteChecks();
     }
@@ -72,8 +74,10 @@ class HealthchecksClientTest extends AbstractTest
                 }
                 return true;
             }))
-            ->andReturn(json_decode(file_get_contents(TEST_FIXTURE_PATH . '/Pinger/Drivers/Healthchecks/create.json'),
-                true));
+            ->andReturn(json_decode(
+                file_get_contents(TEST_FIXTURE_PATH . '/Pinger/Drivers/Healthchecks/create.json'),
+                true
+            ));
 
 
         $response = $driver->createCheckForEvent($event);

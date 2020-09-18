@@ -28,7 +28,8 @@ trait EventAdderTrait
             $command = Container::getInstance()->get($command)->getName();
         }
         return $this->exec(
-            Application::formatCommandString($command), $parameters
+            Application::formatCommandString($command),
+            $parameters
         );
     }
 

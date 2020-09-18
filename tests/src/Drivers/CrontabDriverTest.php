@@ -14,7 +14,6 @@ use Bytic\Scheduler\Tests\AbstractTest;
  */
 class CrontabDriverTest extends AbstractTest
 {
-
     public function test_generateContent()
     {
         $driver = new CrontabDriver();

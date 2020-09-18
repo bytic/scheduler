@@ -14,7 +14,6 @@ use Bytic\Scheduler\Tests\AbstractTest;
  */
 class HasPingersTest extends AbstractTest
 {
-
     public function test_onEventAddedDrivers()
     {
         $scheduler = new Scheduler();

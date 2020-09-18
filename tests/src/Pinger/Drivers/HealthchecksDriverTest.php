@@ -14,7 +14,6 @@ use Nip\Config\Config;
  */
 class HealthchecksDriverTest extends AbstractTest
 {
-
     public function test_construct_with_config()
     {
         $config = new Config(['apiKey' => 999]);

@@ -26,7 +26,6 @@ trait HasPingers
         foreach ($pingers as $destination => $pingerOptions) {
             $this->eventsByPinger[$destination][] = $event->getIdentifier();
         }
-
     }
 
     protected function publishPingers()

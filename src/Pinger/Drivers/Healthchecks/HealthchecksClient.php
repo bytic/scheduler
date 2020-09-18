@@ -103,7 +103,6 @@ class HealthchecksClient
     {
         $response = $this->request('GET', '/api/v1/checks/');
         return array_filter($response['checks'], function ($check) {
-
             $tags = explode(' ', $check['tags']);
             if (array_search($this->getIdentifier(), $tags) === false) {
                 return false;
@@ -166,5 +165,4 @@ class HealthchecksClient
         }
         return self::BASE_URI;
     }
-
 }

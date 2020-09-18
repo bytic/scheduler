@@ -28,7 +28,6 @@ class HasCallbacksTest extends AbstractTest
             Invoker::call($callback, [$event], true);
         }
         self::assertTrue($event->afterTest);
-
     }
 
     public function test_after()

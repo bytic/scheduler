@@ -11,7 +11,6 @@ use Bytic\Scheduler\Tests\AbstractTest;
  */
 class CanPingTest extends AbstractTest
 {
-
     public function test_pingOnLifecycle()
     {
         $event = new Event('php foe');
