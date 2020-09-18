@@ -56,7 +56,9 @@ class CrontabDriver extends AbstractDriver
     {
         $content = [];
         foreach ($collection as $event) {
+            $content[] = static::generateCommentForEvent($event);
             $content[] = static::generateContentForEvent($event);
+            $content[] = '';
         }
         return implode("\n", $content);
     }
@@ -71,5 +73,14 @@ class CrontabDriver extends AbstractDriver
         $content .= Helper::normalizePath(Helper::getBasePath(), 'vendor', 'bin', 'bytic') . ' schedule:run-event';
         $content .= ' -e ' . $event->getIdentifier();
         return $content;
+    }
+
+    /**
+     * @param Event $event
+     * @return string
+     */
+    public function generateCommentForEvent(Event $event)
+    {
+        return '# Event ['. $event->getSummaryForDisplay() . '] ';
     }
 }
