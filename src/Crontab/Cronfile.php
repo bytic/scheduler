@@ -47,11 +47,17 @@ class Cronfile
         $this->hasFooter = preg_match("/^" . preg_quote($this->footer, "/") . "\s*$/m", $this->content) === 1;
 
         if ($this->hasHeader && !$this->hasFooter) {
-            throw new InvalidIdentifierException(sprintf('Unclosed identifier. Your crontab contains "%s", but no "%s".',
-                $this->header, $this->footer));
+            throw new InvalidIdentifierException(sprintf(
+                'Unclosed identifier. Your crontab contains "%s", but no "%s".',
+                $this->header,
+                $this->footer
+            ));
         } elseif (!$this->hasHeader && $this->hasFooter) {
-            throw new InvalidIdentifierException(sprintf('Unopened identifier. Your crontab contains "%s", but no "%s".',
-                $this->footer, $this->header));
+            throw new InvalidIdentifierException(sprintf(
+                'Unopened identifier. Your crontab contains "%s", but no "%s".',
+                $this->footer,
+                $this->header
+            ));
         }
     }
 

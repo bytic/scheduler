@@ -18,7 +18,8 @@ class CommandBuilderTest extends AbstractTest
 
         static::assertSame(
             'php foe',
-            (new CommandBuilder())->buildCommand($event));
+            (new CommandBuilder())->buildCommand($event)
+        );
     }
 
     public function test_buildCommand_with_cwd()

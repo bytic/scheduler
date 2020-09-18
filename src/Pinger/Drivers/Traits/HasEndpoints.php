@@ -139,7 +139,7 @@ trait HasEndpoints
      * @param $body
      * @return RequestInterface
      */
-    protected function buildRequestInstance($method, $uri, $body,$headers)
+    protected function buildRequestInstance($method, $uri, $body, $headers)
     {
         $request = $this->getRequestFactory()->createRequest($method, $uri);
 

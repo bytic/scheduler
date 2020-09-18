@@ -119,18 +119,18 @@ trait HasCallbacks
      * @param array $parameters
      * @return string
      */
-    public function invokeBeforeCallbacks( array $parameters = [])
+    public function invokeBeforeCallbacks(array $parameters = [])
     {
-        return $this->invokeCallbacks( $this->beforeCallbacks(), $parameters);
+        return $this->invokeCallbacks($this->beforeCallbacks(), $parameters);
     }
 
     /**
      * @param array $parameters
      * @return string
      */
-    public function invokeAfterCallbacks( array $parameters = [])
+    public function invokeAfterCallbacks(array $parameters = [])
     {
-        return $this->invokeCallbacks( $this->afterCallbacks(), $parameters);
+        return $this->invokeCallbacks($this->afterCallbacks(), $parameters);
     }
 
     /**
