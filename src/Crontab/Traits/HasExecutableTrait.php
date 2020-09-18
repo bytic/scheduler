@@ -75,4 +75,10 @@ trait HasExecutableTrait
     {
         $this->executable = '/usr/bin/crontab';
     }
+
+    /**
+     * @param null $user
+     * @return mixed
+     */
+    abstract public function user($user = null);
 }

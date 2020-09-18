@@ -46,7 +46,7 @@ trait HasIdentifierTrait
     protected function generateIdentifier()
     {
         $identifier = Helper::getBasePath();
-        if (function_exists('app') && function_exists('config')) {
+        if (function_exists('app') && function_exists('config') && app()->has('config')) {
             $configName = $this->getConfigBase('app.name');
             $identifier = (empty($configName)) ? $identifier : $configName;
         }

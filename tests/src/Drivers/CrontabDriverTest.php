@@ -4,6 +4,7 @@ namespace Bytic\Scheduler\Tests\Drivers;
 
 use Bytic\Scheduler\Drivers\CrontabDriver;
 use Bytic\Scheduler\Events\Event;
+use Bytic\Scheduler\Events\EventCollection;
 use Bytic\Scheduler\Helper;
 use Bytic\Scheduler\Tests\AbstractTest;
 
@@ -13,6 +14,23 @@ use Bytic\Scheduler\Tests\AbstractTest;
  */
 class CrontabDriverTest extends AbstractTest
 {
+
+    public function test_generateContent()
+    {
+        $driver = new CrontabDriver();
+        $events = new EventCollection();
+
+        $event1 = (new Event('php foe1'));
+        $events->add($event1);
+
+        $event2 = (new Event('php foe2'));
+        $events->add($event2);
+
+        $content = $driver->generateContent($events);
+        self::assertStringContainsString('# Event [php foe1]', $content);
+        self::assertStringContainsString('# Event [php foe2]', $content);
+    }
+
     /**
      * @param $event
      * @param $content

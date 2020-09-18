@@ -9,7 +9,7 @@ if (!function_exists('scheduler')) {
      */
     function scheduler()
     {
-        if (function_exists('app')) {
+        if (function_exists('app') && app()->has('scheduler')) {
             return app('scheduler');
         }
 

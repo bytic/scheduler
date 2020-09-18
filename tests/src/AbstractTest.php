@@ -11,20 +11,13 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class AbstractTest extends TestCase
 {
+    use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         \Nip\Container\Container::setInstance(new \Nip\Container\Container());
         @unlink(CACHE_PATH . '/scheduler.php');
-    }
-
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        $this->addToAssertionCount(
-            \Mockery::getContainer()->mockery_getExpectationCount()
-        );
-        m::close();
     }
 }

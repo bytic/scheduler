@@ -57,4 +57,6 @@ trait HasCommentBlockTrait
     {
         return '# End ' . $this->getBaseComment() . ' for [' . $this->getIdentifier() . ']';
     }
+
+    abstract public function getIdentifier();
 }

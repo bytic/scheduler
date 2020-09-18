@@ -24,7 +24,7 @@ class PingerManagerTest extends AbstractTest
         $urlPinger = \Mockery::mock(UrlDriver::class)->makePartial();
         $urlPinger->shouldReceive('ping')->withArgs([$event, ['url' => $url]])->once();
 
-        Container::getInstance()->set(UrlDriver::class, $urlPinger);
+        PingerManager::add($urlPinger, 'url');
 
         PingerManager::ping($url, $event);
     }
@@ -36,7 +36,7 @@ class PingerManagerTest extends AbstractTest
         $urlPinger = \Mockery::mock(HealthchecksDriver::class)->makePartial();
         $urlPinger->shouldReceive('ping')->withArgs([$event, []])->once();
 
-        Container::getInstance()->set(HealthchecksDriver::class, $urlPinger);
+        PingerManager::add($urlPinger, 'healthchecks');
 
         PingerManager::ping('healthchecks', $event);
     }

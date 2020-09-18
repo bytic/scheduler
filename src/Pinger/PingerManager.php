@@ -54,13 +54,14 @@ class PingerManager
      */
     public static function get($destination)
     {
+        if (filter_var($destination, FILTER_VALIDATE_URL)) {
+            $destination = 'url';
+        }
+
         if (isset(static::$instances[$destination])) {
             return static::$instances[$destination];
         }
 
-        if (filter_var($destination, FILTER_VALIDATE_URL)) {
-            $destination = 'url';
-        }
         static::add(static::instanceDriver($destination), $destination);
         return static::$instances[$destination];
     }
@@ -87,7 +88,7 @@ class PingerManager
      */
     protected static function driverConfig($driver)
     {
-        if (function_exists('config') && function_exists('app')) {
+        if (function_exists('config') && function_exists('app') && app()->has('config')) {
             return config('scheduler.pingers.' . $driver, []);
         }
         return [];
