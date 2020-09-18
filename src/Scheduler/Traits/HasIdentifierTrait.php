@@ -10,7 +10,6 @@ use Bytic\Scheduler\Helper;
  */
 trait HasIdentifierTrait
 {
-
     /**
      * @var string
      */

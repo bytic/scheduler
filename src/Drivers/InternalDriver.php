@@ -10,7 +10,6 @@ use Bytic\Scheduler\Events\EventCollection;
  */
 class InternalDriver extends AbstractDriver
 {
-
     /**
      * @param EventCollection $collection
      * @return void

@@ -33,6 +33,6 @@ trait HasCommand
      */
     public function buildCommand()
     {
-        return (new CommandBuilder)->buildCommand($this);
+        return (new CommandBuilder())->buildCommand($this);
     }
 }

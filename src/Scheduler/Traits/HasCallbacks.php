@@ -8,7 +8,6 @@ namespace Bytic\Scheduler\Scheduler\Traits;
  */
 trait HasCallbacks
 {
-
     /**
      * The array of callbacks to be run for certain events
      *

@@ -26,7 +26,7 @@ trait HasWriterTrait
     public function write($content, $user = null)
     {
         $crontab = $this->generateCrontabContent($content, $user);
-        
+
         $tempFile = tempnam(sys_get_temp_dir(), 'bytic_cron');
         file_put_contents($tempFile, $crontab);
 

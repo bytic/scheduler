@@ -8,7 +8,6 @@ namespace Bytic\Scheduler\Scheduler\Traits;
  */
 trait HasConfigTrait
 {
-
     /**
      * Get configuration value.
      *
