@@ -77,6 +77,7 @@ class PingerManager
 
         $container = function_exists('app') ? app() : (class_exists(Container::class) ? Container::getInstance() : null);
         if ($container instanceof Container) {
+            /** @var AbstractDriver $driver */
             $driver = $container->get($class, true);
             $driver->populateFromConfig($config);
             return $driver;

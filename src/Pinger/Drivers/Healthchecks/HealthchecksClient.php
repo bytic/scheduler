@@ -35,7 +35,7 @@ class HealthchecksClient
     /**
      * @return string
      */
-    public function getApiKey(): string
+    public function getApiKey()
     {
         return $this->apiKey;
     }

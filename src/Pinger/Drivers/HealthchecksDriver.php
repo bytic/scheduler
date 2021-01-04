@@ -19,9 +19,17 @@ class HealthchecksDriver extends AbstractDriver
      */
     public function __construct($config = [])
     {
-        parent::__construct($config);
-
         $this->client = new HealthchecksClient();
+        parent::__construct($config);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function populateFromConfig($config)
+    {
+        parent::populateFromConfig($config);
+
         $this->client->populateFromConfig($config);
     }
 

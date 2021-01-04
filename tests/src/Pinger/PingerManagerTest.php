@@ -45,8 +45,8 @@ class PingerManagerTest extends AbstractTest
     {
         /** @var PingerManager|Mock $manager */
         $manager = \Mockery::mock(PingerManager::class)->makePartial()->shouldAllowMockingProtectedMethods();
-        $manager->shouldReceive('driverConfig')->with('healthchecks')->once()->andReturn(['apiKey' => '1111']);
         $manager::reset();
+        $manager->shouldReceive('driverConfig')->with('healthchecks')->once()->andReturn(['apiKey' => '1111']);
 
         $healthchecks = $manager::get('healthchecks');
         self::assertInstanceOf(HealthchecksDriver::class, $healthchecks);
