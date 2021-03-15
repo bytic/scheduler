@@ -4,7 +4,9 @@ namespace Bytic\Scheduler\Loader\CacheLoader;
 
 use Bytic\Scheduler\Events\EventCollection;
 use Bytic\Scheduler\Scheduler;
-use Nip\Cache\Manager;
+use DateInterval;
+use Nip\Cache\Cacheable\HasCacheStore;
+use Nip\Utility\Str;
 use Nip\Utility\Traits\SingletonTrait;
 
 /**
@@ -14,18 +16,7 @@ use Nip\Utility\Traits\SingletonTrait;
 class CacheLoader
 {
     use SingletonTrait;
-
-    protected $cacheManager;
-
-    /**
-     * CacheLoader constructor.
-     */
-    public function __construct()
-    {
-        $this->cacheManager = new Manager();
-        $this->cacheManager->setActive(true);
-        $this->cacheManager->setTtl(365 * 24 * 60 * 60);
-    }
+    use HasCacheStore;
 
     /**
      * @param Scheduler $scheduler
@@ -33,9 +24,7 @@ class CacheLoader
      */
     public static function loadEvents(Scheduler $scheduler)
     {
-        $data = static::instance()->cacheManager->get(
-            static::instance()->cacheId()
-        );
+        $data = static::instance()->getDataFromCache();
         if ($data instanceof EventCollection) {
             $scheduler->setEvents($data);
             return true;
@@ -48,17 +37,47 @@ class CacheLoader
      */
     public static function saveEvents(Scheduler $scheduler)
     {
-        static::instance()->cacheManager->saveData(
-            static::instance()->cacheId(),
+        static::instance()->saveDataToCache(
             $scheduler->getEvents()
         );
     }
 
     /**
+     * @param null $key
+     * @return mixed|null
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    protected function getDataFromCache($key = null)
+    {
+        return $this->cacheStore()->get($this->dataCacheKey($key));
+    }
+
+    /**
+     * @param $data
+     * @param null $key
+     * @noinspection PhpDocMissingThrowsInspection
+     */
+    protected function saveDataToCache($data, $key = null)
+    {
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->cacheStore()->set($this->dataCacheKey($key), $data,$this->dataCacheTtl($key));
+    }
+
+    /**
+     * @param $key
      * @return string
      */
-    protected function cacheId()
+    protected function dataCacheKey($key= null): string
     {
-        return 'scheduler';
+        return Str::slug(__CLASS__).$key;
+    }
+
+    /**
+     * @param null $key
+     * @return DateInterval
+     */
+    protected function dataCacheTtl($key= null)
+    {
+        return DateInterval::createFromDateString('1 year');
     }
 }

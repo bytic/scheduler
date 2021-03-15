@@ -17,7 +17,6 @@ abstract class AbstractTest extends TestCase
     {
         parent::setUp();
 
-        \Nip\Container\Container::setInstance(new \Nip\Container\Container());
         @unlink(CACHE_PATH . '/scheduler.php');
     }
 }

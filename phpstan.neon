@@ -1,0 +1,14 @@
+
+includes:
+    - vendor/bytic/phpqaconfig/config/phpstan.neon
+
+parameters:
+    level: 5
+    paths:
+        - src
+
+    ignoreErrors:
+
+    excludes_analyse:
+        - tests/tmp/*
+

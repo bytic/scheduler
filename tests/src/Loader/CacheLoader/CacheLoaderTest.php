@@ -36,18 +36,15 @@ class CacheLoaderTest extends AbstractTest
 
         CacheLoader::saveEvents($scheduler);
 
-        self::assertFileExists(CACHE_PATH . '/scheduler.php');
+        self::assertDirectoryExists(CACHE_PATH . '/@');
     }
 
     public function test_loadEvents()
     {
         Helper::setBasePath(TEST_FIXTURE_PATH);
 
-        $scheduler = new Scheduler();
-        $scheduler->getEvents();
-
-        static::assertCount(1, $scheduler->getEvents());
-        self::assertFileExists(CACHE_PATH . '/scheduler.php');
+        $scheduler1 = new Scheduler();
+        $scheduler1->getEvents();
 
         $scheduler = new Scheduler();
         $events = new EventCollection();
@@ -55,6 +52,6 @@ class CacheLoaderTest extends AbstractTest
         $result = CacheLoader::loadEvents($scheduler);
         self::assertTrue($result);
 
-        static::assertCount(1, $scheduler->getEvents());
+        static::assertEquals($scheduler1->getEvents(), $scheduler->getEvents());
     }
 }
