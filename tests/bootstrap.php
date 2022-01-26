@@ -1,8 +1,10 @@
 <?php
 
+use Bytic\Scheduler\Helper;
 use Nip\Cache\Stores\Repository;
 use Nip\Container\Container;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Dotenv\Dotenv;
 
 define('TEST_BASE_PATH', realpath(__DIR__));
 define('PROJECT_BASE_PATH', dirname(TEST_BASE_PATH));
@@ -12,7 +14,7 @@ error_reporting(E_ALL);
 
 require PROJECT_BASE_PATH . '/vendor/autoload.php';
 
-\Bytic\Scheduler\Helper::isWindows(false);
+Helper::isWindows(false);
 define('CACHE_PATH', TEST_BASE_PATH . DIRECTORY_SEPARATOR . 'cache');
 
 $container = new Container();
@@ -26,6 +28,6 @@ $container->set('cache.store', $store);
 Container::setInstance($container);
 
 if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . '.env')) {
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-    $dotenv->load();
+    (new Dotenv())
+        ->bootEnv(__DIR__ . DIRECTORY_SEPARATOR . '.env');
 }

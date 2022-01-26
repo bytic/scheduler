@@ -5,6 +5,7 @@
 namespace Bytic\Scheduler\Pinger\Drivers\Traits;
 
 use Bytic\Scheduler\Scheduler;
+use Exception;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -21,7 +22,7 @@ trait HasEndpoints
      * @param string $path Request path
      * @param null $payload
      * @return string|array
-     * @throws \Exception
+     * @throws Exception
      */
     public function request($method, $path, $payload = null)
     {
@@ -38,9 +39,9 @@ trait HasEndpoints
     {
         try {
             $response = $this->getClient()->sendRequest($request);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // throw an exception if the http request failed
-            throw new \Exception($e->getMessage(), $e->getCode());
+            throw new Exception($e->getMessage(), $e->getCode());
         }
         return $response;
     }
@@ -91,7 +92,7 @@ trait HasEndpoints
             $body = $payload;
         }
 
-        $url = $this->generateFullUri($path, $params);
+        $uri = $this->generateFullUri($path, $params);
         $headers = $this->getHttpHeaders($headers);
 
         if ('PUT' === $method || 'POST' === $method) {
@@ -102,7 +103,7 @@ trait HasEndpoints
 
         return [
             'method' => $method,
-            'url' => $url,
+            'uri' => $uri,
             'body' => $body,
             'headers' => $headers,
         ];

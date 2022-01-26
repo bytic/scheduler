@@ -7,6 +7,7 @@ use ByTIC\Console\Support\ProcessUtils;
 use Bytic\Scheduler\Events\Event;
 use Bytic\Scheduler\Events\EventAdder;
 use Bytic\Scheduler\Exception\InvalidArgumentException;
+use Bytic\Scheduler\Utility\PhpBinary;
 use Nip\Container\Container;
 
 /**
@@ -40,12 +41,13 @@ trait EventAdderTrait
      * @param array $parameters
      * @return EventAdder
      */
-    public function php($script, array $parameters = [])
+    public function php($script, array $parameters = [], $bin = null)
     {
         if (!is_string($script)) {
             throw new InvalidArgumentException('The script parameter is not a string.');
         }
-        $bin = Application::phpBinary();
+
+        $bin = PhpBinary::get($bin);
         $command = $bin . ' ' . $script;
 
         $adder = $this->exec($command, $parameters);
@@ -59,6 +61,36 @@ trait EventAdderTrait
             }
         });
         return $adder;
+    }
+
+    /**
+     * @param $script
+     * @param array $parameters
+     * @return EventAdder
+     */
+    public function php74($script, array $parameters = []): EventAdder
+    {
+        return $this->php($script, $parameters, PhpBinary::PHP_7_4);
+    }
+
+    /**
+     * @param $script
+     * @param array $parameters
+     * @return EventAdder
+     */
+    public function php80($script, array $parameters = []): EventAdder
+    {
+        return $this->php($script, $parameters, PhpBinary::PHP_8_0);
+    }
+
+    /**
+     * @param $script
+     * @param array $parameters
+     * @return EventAdder
+     */
+    public function php81($script, array $parameters = []): EventAdder
+    {
+        return $this->php($script, $parameters, PhpBinary::PHP_8_1);
     }
 
     /**

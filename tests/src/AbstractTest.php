@@ -2,8 +2,7 @@
 
 namespace Bytic\Scheduler\Tests;
 
-use Mockery as m;
-use PHPUnit\Framework\TestCase;
+use Bytic\Phpqa\PHPUnit\TestCase;
 
 /**
  * Class AbstractTest
@@ -11,7 +10,6 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class AbstractTest extends TestCase
 {
-    use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
     protected function setUp(): void
     {
