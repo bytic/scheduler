@@ -13,10 +13,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PublishCommand extends Command
 {
+    public const NAME = 'scheduler:register';
+
     protected function configure()
     {
         parent::configure();
-        $this->setName('schedule:register');
+        $this->setName(self::NAME);
     }
 
     /**
