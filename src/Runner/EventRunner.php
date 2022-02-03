@@ -4,7 +4,9 @@ namespace Bytic\Scheduler\Runner;
 
 use Bytic\Scheduler\Events\Event;
 use Bytic\Scheduler\Events\EventCollection;
+use Closure;
 use Symfony\Component\Console\Output\OutputInterface;
+use function usleep;
 
 /**
  * Class EventRunner
@@ -65,14 +67,14 @@ class EventRunner
                 $this->events->unset($eventKey);
             }
 
-            \usleep(250000);
+            usleep(250000);
         }
     }
 
     /**
      * Invoke an array of callables.
      *
-     * @param \Closure[] $callbacks
+     * @param Closure[] $callbacks
      * @param array<mixed,mixed> $parameters
      *
      * @return string
@@ -96,6 +98,7 @@ class EventRunner
     {
         return $event->getSummaryForDisplay()
             . '('
+            . $event->getWorkingDirectory()
             . $event->getCommand()
             . ') '
             . PHP_EOL

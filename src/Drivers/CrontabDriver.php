@@ -73,7 +73,7 @@ class CrontabDriver extends AbstractDriver
     public function generateContentForEvent(Event $event)
     {
         $content = $event->getExpression() . ' ';
-        $content .= $this->generatePhpBinaryForEvent($event);
+        $content .= ' ' . $this->generatePhpBinaryForEvent($event);
         $content .= Helper::normalizePath(Helper::getBasePath(), 'vendor', 'bin', 'bytic') . ' schedule:run-event';
         $content .= ' -e ' . $event->getIdentifier();
         return $content;
