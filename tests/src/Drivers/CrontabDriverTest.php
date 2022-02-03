@@ -16,6 +16,8 @@ class CrontabDriverTest extends AbstractTest
 {
     public function test_generateContent()
     {
+        $this->loadConfig();
+
         $driver = new CrontabDriver();
         $events = new EventCollection();
 
@@ -37,8 +39,14 @@ class CrontabDriverTest extends AbstractTest
      */
     public function test_generateContentForEvent(Event $event, $content)
     {
+        $this->loadConfig();
+
         $driver = new CrontabDriver();
-        self::assertStringStartsWith($content, $driver->generateContentForEvent($event));
+        $cron = $driver->generateContentForEvent($event);
+        foreach ($content as $string) {
+            self::assertStringContainsString($string, $cron);
+        }
+        self::assertStringContainsString('/bin/php', $cron);
     }
 
     /**
@@ -50,11 +58,11 @@ class CrontabDriverTest extends AbstractTest
         return [
             [
                 (new Event('php foe1')),
-                '* * * * * ' . $byticPath . ' schedule:run-event -e'
+                ['* * * * *', $byticPath, ' schedule:run-event -e']
             ],
             [
                 (new Event('php foe2')),
-                '* * * * * ' . $byticPath . ' schedule:run-event -e'
+                ['* * * * *', $byticPath, ' schedule:run-event -e']
             ],
         ];
     }

@@ -1,19 +1,48 @@
 {
   "name": "bytic/scheduler",
-  "type": "library",
   "description": "Scheduler library for bytic framework",
-  "keywords": [
-    "facebook",
-    "pixel"
-  ],
-  "homepage": "https://github.com/bytic/scheduler",
   "license": "MIT",
+  "type": "library",
+  "keywords": [],
   "authors": [
     {
       "name": "Gabriel Solomon",
       "email": "hello@gabrielsolomon.ro"
     }
   ],
+  "homepage": "https://github.com/bytic/scheduler",
+  "require": {
+    "php": "^7.2 || ^8.0",
+    "ext-json": "*",
+    "bytic/cache": "^0.9 || ^1.0",
+    "bytic/collections": "^1.0",
+    "bytic/console": "^0.9 || ^1.0",
+    "bytic/package-base": "^1.0",
+    "bytic/utility": "^1.0",
+    "opis/closure": "^3.1",
+    "php-http/client-common": "^1.9 || ^2.0",
+    "php-http/client-implementation": "^1.0",
+    "php-http/discovery": "^1.6",
+    "php-http/httplug": "^1.1 || ^2.0",
+    "php-http/message": "^1.5",
+    "php-http/message-factory": "^1.0",
+    "php-http/multipart-stream-builder": "^1.0",
+    "psr/http-client": "^1.0",
+    "psr/http-factory": "^1.0",
+    "psr/http-message": "^1.0",
+    "symfony/process": "^4.0 || ^5.0 || ^6.0"
+  },
+  "require-dev": {
+    "bytic/config": "^1.0",
+    "bytic/container": "^1.0 || ^2.0",
+    "bytic/deployer-recipies": "^6.0 || ^7.0",
+    "bytic/dotenv": "^4.0",
+    "bytic/phpqatools": "^1.0",
+    "nyholm/psr7": "^1.1",
+    "php-http/mock-client": "^1.0"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "autoload": {
     "psr-4": {
       "Bytic\\Scheduler\\": "src"
@@ -27,36 +56,5 @@
       "Bytic\\Scheduler\\Tests\\": "tests/src",
       "Bytic\\Scheduler\\Tests\\Fixtures\\": "tests/fixtures"
     }
-  },
-  "require": {
-    "php": "^7.2|^8.0",
-    "ext-json": "*",
-    "bytic/collections": "^1.0",
-    "bytic/cache": "^0.9|^1.0",
-    "bytic/console": "^0.9|^1.0",
-    "bytic/utility": "^1.0",
-    "symfony/process": "^4.0|^5.0|^6.0",
-    "opis/closure": "^3.1",
-    "psr/http-client": "^1.0",
-    "psr/http-factory": "^1.0",
-    "psr/http-message": "^1.0",
-    "php-http/httplug": "^1.1|^2.0",
-    "php-http/client-common": "^1.9 || ^2.0",
-    "php-http/client-implementation": "^1.0",
-    "php-http/multipart-stream-builder": "^1.0",
-    "php-http/discovery": "^1.6",
-    "php-http/message": "^1.5",
-    "php-http/message-factory": "^1.0"
-  },
-  "require-dev": {
-    "bytic/deployer-recipies": "^6.0|^7.0",
-    "bytic/dotenv": "^4.0",
-    "bytic/container": "^1.0|^2.0",
-    "bytic/config": "^1.0",
-    "php-http/mock-client": "^1.0",
-    "nyholm/psr7": "^1.1",
-    "bytic/phpqatools": "^1.0"
-  },
-  "prefer-stable": true,
-  "minimum-stability": "dev"
+  }
 }

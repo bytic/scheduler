@@ -6,6 +6,9 @@ use Bytic\Scheduler\Crontab\Crontab;
 use Bytic\Scheduler\Events\Event;
 use Bytic\Scheduler\Events\EventCollection;
 use Bytic\Scheduler\Helper;
+use Bytic\Scheduler\Utility\PackageConfig;
+use Bytic\Scheduler\Utility\PhpBinary;
+use Exception;
 
 /**
  * Class CrontabDriver
@@ -70,6 +73,7 @@ class CrontabDriver extends AbstractDriver
     public function generateContentForEvent(Event $event)
     {
         $content = $event->getExpression() . ' ';
+        $content .= $this->generatePhpBinaryForEvent($event);
         $content .= Helper::normalizePath(Helper::getBasePath(), 'vendor', 'bin', 'bytic') . ' schedule:run-event';
         $content .= ' -e ' . $event->getIdentifier();
         return $content;
@@ -82,5 +86,29 @@ class CrontabDriver extends AbstractDriver
     public function generateCommentForEvent(Event $event)
     {
         return '# Event [' . $event->getSummaryForDisplay() . ']';
+    }
+
+    /**
+     * @param Event $event
+     * @return string
+     */
+    public function generatePhpBinaryForEvent(Event $event)
+    {
+        return $this->getPhpBinaryProject();
+    }
+
+    /**
+     * @return mixed|string
+     * @throws Exception
+     */
+    protected function getPhpBinaryProject()
+    {
+        static $phpBinary = null;
+        if ($phpBinary === null) {
+            $php = PackageConfig::phpBin();
+            $phpBinary = PhpBinary::get($php);
+        }
+
+        return $phpBinary;
     }
 }
