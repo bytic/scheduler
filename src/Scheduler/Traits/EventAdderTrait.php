@@ -23,13 +23,17 @@ trait EventAdderTrait
      * @param array $parameters
      * @return EventAdder
      */
-    public function command($command, array $parameters = [])
+    public function command($command, array $parameters = [], $bin = null)
     {
         if (class_exists($command)) {
             $command = Container::getInstance()->get($command)->getName();
         }
+
+        $bin = PhpBinary::get($bin);
+        $command = $bin . ' ' . Application::formatCommandString($command);
+
         return $this->exec(
-            Application::formatCommandString($command),
+            $command,
             $parameters
         );
     }
