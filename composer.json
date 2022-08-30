@@ -56,5 +56,15 @@
       "Bytic\\Scheduler\\Tests\\": "tests/src",
       "Bytic\\Scheduler\\Tests\\Fixtures\\": "tests/fixtures"
     }
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "captainhook/plugin-composer": true,
+      "ergebnis/composer-normalize": true,
+      "phpstan/extension-installer": true,
+      "ramsey/composer-repl": true,
+      "bytic/phpqatools": true
+    }
   }
 }

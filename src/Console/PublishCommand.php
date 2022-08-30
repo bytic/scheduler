@@ -26,7 +26,7 @@ class PublishCommand extends Command
      * @noinspection PhpMissingParentCallCommonInspection
      * @throws Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $scheduler = scheduler();
         $scheduler->publish();

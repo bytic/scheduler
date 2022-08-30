@@ -24,7 +24,7 @@ class ListCommand extends Command
      * @noinspection PhpMissingParentCallCommonInspection
      * @throws Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $scheduler = scheduler();
         $events = $scheduler->getEvents();

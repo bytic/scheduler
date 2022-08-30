@@ -57,7 +57,7 @@ class RunEventCommand extends Command
      * @noinspection PhpMissingParentCallCommonInspection
      * @throws Exception
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var string $closure */
         $eventId = $input->getOption('event');
