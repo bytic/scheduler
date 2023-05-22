@@ -7,7 +7,10 @@ use Bytic\Scheduler\Pinger\Drivers\Healthchecks\HealthchecksClient;
 use Bytic\Scheduler\Scheduler;
 use Bytic\Scheduler\Tests\AbstractTest;
 use Http\Discovery\Psr17FactoryDiscovery;
+use Mockery;
+use Mockery\MockInterface;
 use Nip\Container\Container;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class HealthchecksClientTest
@@ -18,7 +21,9 @@ class HealthchecksClientTest extends AbstractTest
     public function test_deleteChecks()
     {
         $driver = $this->newHealthchecksClientMock();
-        $driver->shouldReceive('executeRequest')
+        $driver
+            ->shouldReceive('executeRequest')
+            ->once()
             ->andReturn($this->newResponse(file_get_contents(TEST_FIXTURE_PATH . '/Pinger/Drivers/Healthchecks/checks.json')));
 
         $driver->shouldReceive('request')->with(
@@ -62,7 +67,7 @@ class HealthchecksClientTest extends AbstractTest
 
         $driver = $this->newHealthchecksClientMock();
         $driver->shouldReceive('request')
-            ->with('POST', \Mockery::any(), \Mockery::on(function ($data) {
+            ->with('POST', Mockery::any(), Mockery::on(function ($data) {
                 if (!is_array($data)) {
                     return false;
                 }
@@ -90,12 +95,12 @@ class HealthchecksClientTest extends AbstractTest
 
 
     /**
-     * @return HealthchecksClient|\Mockery\MockInterface
+     * @return HealthchecksClient|MockInterface
      */
     protected function newHealthchecksClientMock()
     {
-        /** @var HealthchecksClient|\Mockery\MockInterface $client */
-        $client = \Mockery::mock(HealthchecksClient::class)->makePartial()->shouldAllowMockingProtectedMethods();
+        /** @var HealthchecksClient|MockInterface $client */
+        $client = Mockery::mock(HealthchecksClient::class)->makePartial()->shouldAllowMockingProtectedMethods();
         $client->shouldReceive('getIdentifier')->andReturn('bytic');
 
         $apiKey = getenv('HEALTHCHECKS_API');
@@ -105,7 +110,7 @@ class HealthchecksClientTest extends AbstractTest
 
     /**
      * @param $content
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return ResponseInterface
      */
     protected function newResponse($content)
     {

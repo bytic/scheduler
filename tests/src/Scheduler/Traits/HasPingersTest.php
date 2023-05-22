@@ -2,11 +2,11 @@
 
 namespace Bytic\Scheduler\Tests\Scheduler\Traits;
 
-use Bytic\Scheduler\Helper;
 use Bytic\Scheduler\Pinger\Drivers\HealthchecksDriver;
 use Bytic\Scheduler\Pinger\PingerManager;
 use Bytic\Scheduler\Scheduler;
 use Bytic\Scheduler\Tests\AbstractTest;
+use Mockery;
 
 /**
  * Class HasDriversTest
@@ -36,8 +36,8 @@ class HasPingersTest extends AbstractTest
 
     public function test_publishPingers()
     {
-        $driver = \Mockery::mock(HealthchecksDriver::class)->makePartial();
-        $driver->shouldReceive('publish');
+        $driver = Mockery::mock(HealthchecksDriver::class)->makePartial();
+        $driver->shouldReceive('publish')->once();
 
 
         $scheduler = new Scheduler();
