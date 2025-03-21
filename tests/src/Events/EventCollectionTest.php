@@ -27,6 +27,6 @@ class EventCollectionTest extends AbstractTest
 
         $serialized = serialize($events);
         $eventsReturned = unserialize($serialized);
-        self::assertEquals($eventsReturned->all(), $events->all());
+        self::assertEquals($events->all(), $eventsReturned->all());
     }
 }

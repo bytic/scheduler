@@ -24,7 +24,6 @@ $store = new Repository($adapter);
 $store->clear();
 $container->set('cache.store', $store);
 
-
 Container::setInstance($container);
 
 if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . '.env')) {

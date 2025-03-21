@@ -2,8 +2,7 @@
 
 namespace Bytic\Scheduler\Events\Traits;
 
-use function Opis\Closure\serialize as s;
-use function Opis\Closure\unserialize as u;
+use Bytic\Scheduler\Serializer\EventSerializer;
 use function serialize;
 
 /**
@@ -12,25 +11,25 @@ use function serialize;
  */
 trait IsSerializable
 {
+    public $inSerialization = false;
+
     public function __serialize(): array
     {
         $data = get_object_vars($this);
-        foreach ($data as $name => $value) {
-            if (in_array($name, ['beforeCallbacks', 'afterCallbacks'])) {
-                $data[$name] = s($value);
-            }
+        if ($this->inSerialization) {
+            return $data;
         }
-        return $data;
+        $this->inSerialization = true;
+        $return = EventSerializer::serializeFromData($data);
+        $this->inSerialization = false;
+        return $return;
     }
 
     public function __unserialize(array $data): void
     {
-        foreach ($data as $name => $value) {
-            if (in_array($name, ['beforeCallbacks', 'afterCallbacks'])) {
-                $value = u($value);
-            }
+        EventSerializer::unserializeFromData($this, $data, function ($name, $value) {
             $this->{$name} = $value;
-        }
+        });
     }
 
     /**
@@ -46,9 +45,9 @@ trait IsSerializable
      */
     public function unserialize($str)
     {
-        $data = u($str);
-        foreach ($data as $name => $value) {
-            $this->{$name} = $value;
+        $data = unserialize($str);
+        if (is_array($data)) {
+            $this->__unserialize($data);
         }
     }
 }
