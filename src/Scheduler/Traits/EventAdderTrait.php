@@ -80,9 +80,9 @@ trait EventAdderTrait
     /**
      * @param $script
      * @param array $parameters
-     * @return EventAdder
+     * @return EventAdder|self
      */
-    public function php80($script, array $parameters = []): EventAdder
+    public function php80($script, array $parameters = []): self
     {
         return $this->php($script, $parameters, PhpBinary::PHP_8_0);
     }
@@ -90,11 +90,41 @@ trait EventAdderTrait
     /**
      * @param $script
      * @param array $parameters
-     * @return EventAdder
+     * @return EventAdder|self
      */
-    public function php81($script, array $parameters = []): EventAdder
+    public function php81($script, array $parameters = []): self
     {
         return $this->php($script, $parameters, PhpBinary::PHP_8_1);
+    }
+
+    /**
+     * @param $script
+     * @param array $parameters
+     * @return EventAdder|self
+     */
+    public function php82($script, array $parameters = []): self
+    {
+        return $this->php($script, $parameters, PhpBinary::PHP_8_2);
+    }
+
+    /**
+     * @param $script
+     * @param array $parameters
+     * @return EventAdder|self
+     */
+    public function php83($script, array $parameters = []): self
+    {
+        return $this->php($script, $parameters, PhpBinary::PHP_8_3);
+    }
+
+    /**
+     * @param $script
+     * @param array $parameters
+     * @return EventAdder|self
+     */
+    public function php84($script, array $parameters = []): self
+    {
+        return $this->php($script, $parameters, PhpBinary::PHP_8_4);
     }
 
     /**
