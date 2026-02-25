@@ -18,6 +18,7 @@ class Event implements Serializable
     use Traits\HasIdentifier;
     use Traits\HasNameDescription;
     use Traits\HasOutput;
+    use Traits\HasRunAt;
     use Traits\HasUser;
     use Traits\HasWorkingDirectory;
     use Traits\IsExecutable;
