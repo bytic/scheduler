@@ -15,6 +15,11 @@ class PackageConfig extends \ByTIC\PackageBase\Utility\PackageConfig
 
     protected $name = SchedulerServiceProvider::NAME;
 
+    public static function configPath(): string
+    {
+        return PackagePaths::configPath();
+    }
+
     /**
      * @throws Exception
      */

@@ -13,8 +13,13 @@ use Bytic\Scheduler\Bundle\Library\View\ViewUtility;
  *
  * @package Bytic\Scheduler\Bundle\Admin\Controllers
  */
-trait AbstractControllerTrait
+trait AbstractSchedulerControllerTrait
 {
+    public function bootAbstractSchedulerControllerTrait()
+    {
+        $this->registerViewPaths($this->getView());
+    }
+
     /**
      * Register admin view paths from the scheduler bundle's resources directory.
      *

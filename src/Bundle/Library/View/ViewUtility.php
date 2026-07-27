@@ -2,6 +2,8 @@
 
 namespace Bytic\Scheduler\Bundle\Library\View;
 
+use Bytic\Scheduler\Utility\PackagePaths;
+
 /**
  * Class ViewUtility
  * @package Bytic\Scheduler\Bundle\Library\View
@@ -19,7 +21,7 @@ class ViewUtility
      */
     public static function registerViewPaths($view, $module = null): void
     {
-        $path = realpath(__DIR__ . '/../../../../../resources/views/' . $module);
+        $path = PackagePaths::resourcesViewsPath($module);
         if ($path !== false) {
             $view->addPath($path);
             $view->addPath($path, self::NAME);
