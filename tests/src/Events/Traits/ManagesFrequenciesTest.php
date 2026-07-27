@@ -42,6 +42,12 @@ class ManagesFrequenciesTest extends AbstractTest
         static::assertEquals('12,43 * * * *', $e->hourlyAt(['12','43'])->getExpression());
     }
 
+    public function test_set_hour_with_multiple_arguments()
+    {
+        $e = new Event('php foo');
+        static::assertEquals('* 8,9,10 * * *', $e->setHour(8, 9, 10)->getExpression());
+    }
+
     public function test_days_methods()
     {
         $e = new Event('php foo');
