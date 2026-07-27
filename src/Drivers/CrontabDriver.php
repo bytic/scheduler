@@ -112,4 +112,16 @@ class CrontabDriver extends AbstractDriver
 
         return $phpBinary;
     }
+
+    /**
+     * @inheritDoc
+     * Uses the crontab identifier so that each application's crontab
+     * driver has its own separate pause-state file.
+     */
+    protected function getPauseStateFile(): string
+    {
+        $id   = $this->crontab->getIdentifier();
+        $name = $id ? preg_replace('/[^a-z0-9_-]/i', '_', $id) : 'default';
+        return sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'scheduler_crontab_pause_' . $name . '.json';
+    }
 }
