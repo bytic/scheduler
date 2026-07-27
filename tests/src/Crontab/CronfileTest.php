@@ -98,4 +98,19 @@ class CronfileTest extends AbstractTest
         self::assertStringContainsString('stats-jobs-process.php', $content);
         self::assertSame(2, substr_count($content, '[Register]'));
     }
+
+    public function test_getManagedContent()
+    {
+        $cronfile = new Cronfile(
+            file_get_contents(TEST_FIXTURE_PATH . '/crontab/default.crontab'),
+            '# Begin BYTIC cron generated tasks for [Team]',
+            '# End BYTIC cron generated tasks for [Team]'
+        );
+
+        $content = $cronfile->getManagedContent();
+
+        self::assertStringContainsString('schedule:run-event -e eb588b3f61d4d079a304405446484c82', $content);
+        self::assertStringNotContainsString('# Begin BYTIC cron generated tasks for [Team]', $content);
+        self::assertStringNotContainsString('# End BYTIC cron generated tasks for [Team]', $content);
+    }
 }

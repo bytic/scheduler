@@ -3,10 +3,12 @@
 namespace Bytic\Scheduler\Tests\Drivers;
 
 use Bytic\Scheduler\Drivers\CrontabDriver;
+use Bytic\Scheduler\Crontab\Crontab;
 use Bytic\Scheduler\Events\Event;
 use Bytic\Scheduler\Events\EventCollection;
 use Bytic\Scheduler\Helper;
 use Bytic\Scheduler\Tests\AbstractTest;
+use Mockery;
 
 /**
  * Class CrontabDriverTest
@@ -65,5 +67,48 @@ class CrontabDriverTest extends AbstractTest
                 ['* * * * *', $byticPath, ' schedule:run-event -e']
             ],
         ];
+    }
+
+    public function test_pause_commentsMatchingCommandInCrontab()
+    {
+        $driver = new CrontabDriver();
+        $crontab = Mockery::mock(Crontab::class)->makePartial();
+        $crontab->shouldReceive('read')
+            ->once()
+            ->andReturn('* * * * * /app/vendor/bin/bytic schedule:run-event -e event-1');
+        $crontab->shouldReceive('write')
+            ->once()
+            ->with('# * * * * * /app/vendor/bin/bytic schedule:run-event -e event-1');
+
+        $driver->setCrontab($crontab);
+        $driver->pause('event-1');
+    }
+
+    public function test_resume_uncommentsMatchingCommandInCrontab()
+    {
+        $driver = new CrontabDriver();
+        $crontab = Mockery::mock(Crontab::class)->makePartial();
+        $crontab->shouldReceive('read')
+            ->once()
+            ->andReturn('# * * * * * /app/vendor/bin/bytic schedule:run-event -e event-1');
+        $crontab->shouldReceive('write')
+            ->once()
+            ->with('* * * * * /app/vendor/bin/bytic schedule:run-event -e event-1');
+
+        $driver->setCrontab($crontab);
+        $driver->resume('event-1');
+    }
+
+    public function test_isPaused_readsCommentedCommandFromCrontab()
+    {
+        $driver = new CrontabDriver();
+        $crontab = Mockery::mock(Crontab::class)->makePartial();
+        $crontab->shouldReceive('read')
+            ->once()
+            ->andReturn('# * * * * * /app/vendor/bin/bytic schedule:run-event -e event-1');
+
+        $driver->setCrontab($crontab);
+
+        self::assertTrue($driver->isPaused('event-1'));
     }
 }
