@@ -2,7 +2,6 @@
 
 namespace Bytic\Scheduler\Bundle\Admin\Controllers;
 
-use Bytic\Scheduler\Bundle\Library\View\ViewUtility;
 use Bytic\Scheduler\Events\Event;
 
 /**
@@ -16,7 +15,7 @@ use Bytic\Scheduler\Events\Event;
  */
 trait CronsControllerTrait
 {
-    use AbstractControllerTrait;
+    use AbstractSchedulerControllerTrait;
 
     /**
      * List all registered cron events.
