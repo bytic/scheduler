@@ -111,4 +111,30 @@ class CrontabDriverTest extends AbstractTest
 
         self::assertTrue($driver->isPaused('event-1'));
     }
+
+    public function test_isInstalled_readsCommandFromCrontab()
+    {
+        $driver = new CrontabDriver();
+        $crontab = Mockery::mock(Crontab::class)->makePartial();
+        $crontab->shouldReceive('read')
+            ->once()
+            ->andReturn('* * * * * /app/vendor/bin/bytic schedule:run-event -e event-1');
+
+        $driver->setCrontab($crontab);
+
+        self::assertTrue($driver->isInstalled('event-1'));
+    }
+
+    public function test_isInstalled_returnsFalseWhenCommandDoesNotExist()
+    {
+        $driver = new CrontabDriver();
+        $crontab = Mockery::mock(Crontab::class)->makePartial();
+        $crontab->shouldReceive('read')
+            ->once()
+            ->andReturn('* * * * * /app/vendor/bin/bytic schedule:run-event -e event-2');
+
+        $driver->setCrontab($crontab);
+
+        self::assertFalse($driver->isInstalled('event-1'));
+    }
 }

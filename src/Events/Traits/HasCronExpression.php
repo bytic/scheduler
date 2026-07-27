@@ -30,8 +30,10 @@ trait HasCronExpression
      * @param $value
      * @return HasCronExpression
      */
-    public function setHour($value)
+    public function setHour(...$value)
     {
+        $value = count($value) === 1 ? $value[0] : $value;
+        $value = is_array($value) ? implode(',', $value) : $value;
         return $this->spliceIntoPosition(2, $value);
     }
 

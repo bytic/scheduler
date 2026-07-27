@@ -31,9 +31,13 @@ trait CronsControllerTrait
         $eventsWithStatus = [];
         foreach ($events as $event) {
             $driver   = $scheduler->getDriver($event->getDriver());
+            $isInstalled = $driver->isInstalled($event->getIdentifier());
+            $isPaused = $isInstalled && $driver->isPaused($event->getIdentifier());
             $eventsWithStatus[] = [
-                'event'    => $event,
-                'isPaused' => $driver->isPaused($event->getIdentifier()),
+                'event'       => $event,
+                'isInstalled' => $isInstalled,
+                'isPaused'    => $isPaused,
+                'status'      => $this->resolveEventStatus($isInstalled, $isPaused),
             ];
         }
 
@@ -54,10 +58,14 @@ trait CronsControllerTrait
 
         $scheduler = scheduler();
         $driver    = $scheduler->getDriver($event->getDriver());
+        $isInstalled = $driver->isInstalled($event->getIdentifier());
+        $isPaused = $isInstalled && $driver->isPaused($event->getIdentifier());
 
         $this->payload()->with([
-            'event'    => $event,
-            'isPaused' => $driver->isPaused($event->getIdentifier()),
+            'event'       => $event,
+            'isInstalled' => $isInstalled,
+            'isPaused'    => $isPaused,
+            'status'      => $this->resolveEventStatus($isInstalled, $isPaused),
         ]);
     }
 
@@ -137,5 +145,19 @@ trait CronsControllerTrait
     protected function buildEventUrl(Event $event, string $action): string
     {
         return '?action=' . $action . '&identifier=' . urlencode($event->getIdentifier());
+    }
+
+    /**
+     * @param bool $isInstalled
+     * @param bool $isPaused
+     * @return string
+     */
+    protected function resolveEventStatus(bool $isInstalled, bool $isPaused): string
+    {
+        if ($isInstalled === false) {
+            return 'not_installed';
+        }
+
+        return $isPaused ? 'paused' : 'active';
     }
 }

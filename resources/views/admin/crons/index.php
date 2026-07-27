@@ -3,7 +3,7 @@
  * Admin view: list all registered cron events.
  *
  * Variables available:
- *   $events  array  Each element: ['event' => Event, 'isPaused' => bool]
+ *   $events  array  Each element: ['event' => Event, 'isInstalled' => bool, 'isPaused' => bool, 'status' => string]
  */
 ?>
 <div class="scheduler-crons">
@@ -32,10 +32,12 @@
             <?php foreach ($events as $row): ?>
                 <?php
                 /** @var \Bytic\Scheduler\Events\Event $event */
-                $event    = $row['event'];
-                $isPaused = $row['isPaused'];
+                $event       = $row['event'];
+                $isInstalled = $row['isInstalled'];
+                $isPaused    = $row['isPaused'];
+                $status      = $row['status'];
                 ?>
-                <tr class="<?= $isPaused ? 'table-secondary' : '' ?>">
+                <tr class="<?= $status === 'paused' ? 'table-secondary' : '' ?>">
                     <td>
                         <?= htmlspecialchars($event->getSummaryForDisplay()) ?>
                         <br>
@@ -44,16 +46,20 @@
                     <td><code><?= htmlspecialchars($event->getExpression()) ?></code></td>
                     <td><?= htmlspecialchars($event->getDriver()) ?></td>
                     <td>
-                        <?php if ($isPaused): ?>
-                            <span class="badge bg-warning text-dark">Paused</span>
-                        <?php else: ?>
-                            <span class="badge bg-success">Active</span>
-                        <?php endif; ?>
+                       <?php if ($status === 'not_installed'): ?>
+                           <span class="badge bg-secondary">Not installed</span>
+                       <?php elseif ($isPaused): ?>
+                           <span class="badge bg-warning text-dark">Paused</span>
+                       <?php else: ?>
+                           <span class="badge bg-success">Active</span>
+                       <?php endif; ?>
                     </td>
                     <td class="text-center">
                         <a href="?action=view&identifier=<?= urlencode($event->getIdentifier()) ?>"
                            class="btn btn-sm btn-outline-primary">View</a>
-                        <?php if ($isPaused): ?>
+                        <?php if (!$isInstalled): ?>
+                           <span class="btn btn-sm btn-outline-secondary disabled">Not installed</span>
+                        <?php elseif ($isPaused): ?>
                             <a href="?action=resume&identifier=<?= urlencode($event->getIdentifier()) ?>"
                                class="btn btn-sm btn-outline-success">Resume</a>
                         <?php else: ?>

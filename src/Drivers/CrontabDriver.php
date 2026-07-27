@@ -76,6 +76,13 @@ class CrontabDriver extends AbstractDriver
         return preg_match($pattern, $this->crontab->read()) === 1;
     }
 
+    public function isInstalled(string $eventIdentifier): bool
+    {
+        $pattern = $this->commandLinePattern($eventIdentifier);
+
+        return preg_match($pattern, $this->crontab->read()) === 1;
+    }
+
     /**
      * @param EventCollection $collection
      * @return string
