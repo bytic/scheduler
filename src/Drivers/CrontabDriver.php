@@ -51,6 +51,31 @@ class CrontabDriver extends AbstractDriver
         $this->crontab->write(static::generateContent($collection));
     }
 
+    public function pause(string $eventIdentifier): void
+    {
+        $content = $this->crontab->read();
+        $updatedContent = $this->updatePauseStateInContent($content, $eventIdentifier, true);
+        if ($updatedContent !== $content) {
+            $this->crontab->write($updatedContent);
+        }
+    }
+
+    public function resume(string $eventIdentifier): void
+    {
+        $content = $this->crontab->read();
+        $updatedContent = $this->updatePauseStateInContent($content, $eventIdentifier, false);
+        if ($updatedContent !== $content) {
+            $this->crontab->write($updatedContent);
+        }
+    }
+
+    public function isPaused(string $eventIdentifier): bool
+    {
+        $pattern = $this->commandLinePattern($eventIdentifier, true);
+
+        return preg_match($pattern, $this->crontab->read()) === 1;
+    }
+
     /**
      * @param EventCollection $collection
      * @return string
@@ -111,5 +136,33 @@ class CrontabDriver extends AbstractDriver
         }
 
         return $phpBinary;
+    }
+
+    protected function updatePauseStateInContent(string $content, string $eventIdentifier, bool $paused): string
+    {
+        $pattern = $this->commandLinePattern($eventIdentifier);
+
+        return preg_replace_callback(
+            $pattern,
+            static function (array $matches) use ($paused) {
+                $indent = $matches['indent'] ?? '';
+                $line = $matches['line'];
+
+                if ($paused) {
+                    return $indent . '# ' . $line;
+                }
+
+                return $indent . $line;
+            },
+            $content
+        ) ?? $content;
+    }
+
+    protected function commandLinePattern(string $eventIdentifier, bool $commentedOnly = false): string
+    {
+        $commentPrefix = $commentedOnly ? "#\\s*" : "(?:#\\s*)?";
+
+        return '/^(?<indent>\s*)' . $commentPrefix
+            . '(?<line>.*schedule:run-event\s+-e\s+' . preg_quote($eventIdentifier, '/') . '(?:\s|$).*)$/m';
     }
 }

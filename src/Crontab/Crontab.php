@@ -26,4 +26,14 @@ class Crontab
             $this->setIdentifier($identifier);
         }
     }
+
+    /**
+     * Reads the scheduler-managed crontab block.
+     *
+     * @return string
+     */
+    public function read(): string
+    {
+        return $this->getCronfile()->getManagedContent();
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Bytic\Scheduler\Drivers;
 
+use Bytic\Scheduler\Drivers\Traits\HasPauseStateTrait;
 use Bytic\Scheduler\Events\EventCollection;
 
 /**
@@ -10,6 +11,8 @@ use Bytic\Scheduler\Events\EventCollection;
  */
 abstract class AbstractDriver
 {
+    use HasPauseStateTrait;
+
     /**
      * @param EventCollection $collection
      * @return void

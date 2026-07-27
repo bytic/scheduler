@@ -41,6 +41,23 @@ class Cronfile
         return $this->content;
     }
 
+    /**
+     * @return string
+     */
+    public function getManagedContent(): string
+    {
+        if (!$this->isPresent()) {
+            return '';
+        }
+
+        $pattern = "/^" . preg_quote($this->header, "/") . "\s*$\R?(?<content>.*?)\R?^"
+            . preg_quote($this->footer, "/") . "\s*$/ms";
+
+        preg_match($pattern, $this->content, $matches);
+
+        return rtrim((string) ($matches['content'] ?? ''), "\r\n");
+    }
+
     protected function detectHeaderFooter()
     {
         $this->hasHeader = preg_match("/^" . preg_quote($this->header, "/") . "\s*$/m", $this->content) === 1;
