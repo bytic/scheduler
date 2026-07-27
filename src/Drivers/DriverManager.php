@@ -13,6 +13,7 @@ class DriverManager
 {
     protected static $list = [
         'crontab' => CrontabDriver::class,
+        'database' => DatabaseDriver::class,
         'internal' => InternalDriver::class,
     ];
 

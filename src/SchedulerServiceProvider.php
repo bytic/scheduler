@@ -5,8 +5,11 @@ namespace Bytic\Scheduler;
 use ByTIC\PackageBase\BaseBootableServiceProvider;
 use Bytic\Scheduler\Console\ListCommand;
 use Bytic\Scheduler\Console\PublishCommand;
+use Bytic\Scheduler\Console\RunDatabaseCommand;
 use Bytic\Scheduler\Console\RunEventCommand;
 use Bytic\Scheduler\Drivers\CrontabDriver;
+use Bytic\Scheduler\Drivers\DatabaseDriver;
+use Bytic\Scheduler\Utility\PackageConfig;
 
 /**
  * Class SchedulerServiceProvider
@@ -24,6 +27,7 @@ class SchedulerServiceProvider extends BaseBootableServiceProvider
         parent::register();
         $this->registerScheduler();
         $this->registerCrontabDriver();
+        $this->registerDatabaseDriver();
     }
 
     /**
@@ -50,12 +54,26 @@ class SchedulerServiceProvider extends BaseBootableServiceProvider
         });
     }
 
+    protected function registerDatabaseDriver()
+    {
+        $this->getContainer()->share(DatabaseDriver::class, function () {
+            $driver = new DatabaseDriver();
+            $table = PackageConfig::instance()->get('database.table', 'scheduled_tasks');
+            $driver->setTable($table);
+            if ($this->getContainer()->has('db')) {
+                $driver->setConnection($this->getContainer()->get('db'));
+            }
+            return $driver;
+        });
+    }
+
     protected function registerCommands()
     {
         $this->commands(
             ListCommand::class,
             PublishCommand::class,
-            RunEventCommand::class
+            RunEventCommand::class,
+            RunDatabaseCommand::class
         );
     }
 
