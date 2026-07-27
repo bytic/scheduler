@@ -124,6 +124,37 @@ class DatabaseDriverTest extends AbstractTest
         self::assertEquals(1, (int) $stmt->fetchColumn());
     }
 
+    public function test_isInstalled_returnsFalseWithoutConnection()
+    {
+        $driver = new DatabaseDriver(null);
+
+        self::assertFalse($driver->isInstalled('event-1'));
+    }
+
+    public function test_isInstalled_returnsFalseForMissingRecord()
+    {
+        $pdo = $this->createSqliteConnection();
+        $this->createTable($pdo);
+
+        $driver = new DatabaseDriver($pdo);
+
+        self::assertFalse($driver->isInstalled('event-1'));
+    }
+
+    public function test_isInstalled_returnsTrueForExistingRecord()
+    {
+        $pdo = $this->createSqliteConnection();
+        $this->createTable($pdo);
+
+        $driver = new DatabaseDriver($pdo);
+        $event = new Event('php foo');
+        $events = new EventCollection();
+        $events->add($event);
+        $driver->publish($events);
+
+        self::assertTrue($driver->isInstalled($event->getIdentifier()));
+    }
+
     /**
      * Create a SQLite in-memory PDO connection for testing.
      */

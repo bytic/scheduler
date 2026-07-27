@@ -4,7 +4,9 @@
  *
  * Variables available:
  *   $event     \Bytic\Scheduler\Events\Event
+ *   $isInstalled  bool
  *   $isPaused  bool
+ *   $status    string
  */
 ?>
 <div class="scheduler-cron-view">
@@ -13,7 +15,9 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>
             <?= htmlspecialchars($event->getSummaryForDisplay()) ?>
-            <?php if ($isPaused): ?>
+            <?php if ($status === 'not_installed'): ?>
+                <span class="badge bg-secondary ms-2">Not installed</span>
+            <?php elseif ($isPaused): ?>
                 <span class="badge bg-warning text-dark ms-2">Paused</span>
             <?php else: ?>
                 <span class="badge bg-success ms-2">Active</span>
@@ -30,7 +34,9 @@
             <div class="card">
                 <div class="card-header">Actions</div>
                 <div class="card-body d-grid gap-2">
-                    <?php if ($isPaused): ?>
+                    <?php if (!$isInstalled): ?>
+                        <span class="btn btn-outline-secondary disabled">Not installed in driver</span>
+                    <?php elseif ($isPaused): ?>
                         <a href="?action=resume&identifier=<?= urlencode($event->getIdentifier()) ?>"
                            class="btn btn-success">
                             &#9654; Resume Cron

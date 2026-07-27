@@ -87,6 +87,15 @@ class DatabaseDriver extends AbstractDriver
         }
     }
 
+    public function isInstalled(string $eventIdentifier): bool
+    {
+        if ($this->connection === null) {
+            return false;
+        }
+
+        return $this->recordExists($eventIdentifier);
+    }
+
     /**
      * Insert or update an event in the database.
      *

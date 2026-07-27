@@ -18,4 +18,12 @@ abstract class AbstractDriver
      * @return void
      */
     abstract public function publish(EventCollection $collection);
+
+    /**
+     * Check whether an event is installed in the driver's backend.
+     *
+     * @param string $eventIdentifier
+     * @return bool
+     */
+    abstract public function isInstalled(string $eventIdentifier): bool;
 }

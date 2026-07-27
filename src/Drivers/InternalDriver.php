@@ -17,4 +17,9 @@ class InternalDriver extends AbstractDriver
     public function publish(EventCollection $collection)
     {
     }
+
+    public function isInstalled(string $eventIdentifier): bool
+    {
+        return true;
+    }
 }

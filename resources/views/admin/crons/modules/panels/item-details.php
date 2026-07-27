@@ -4,7 +4,9 @@
  *
  * Variables available (inherited from view.php):
  *   $event     \Bytic\Scheduler\Events\Event
+ *   $isInstalled  bool
  *   $isPaused  bool
+ *   $status    string
  */
 ?>
 <div class="card">
@@ -41,6 +43,8 @@
                     <td>
                         <?php if ($isPaused): ?>
                             <span class="badge bg-warning text-dark">Paused</span>
+                        <?php elseif ($status === 'not_installed'): ?>
+                            <span class="badge bg-secondary">Not installed</span>
                         <?php else: ?>
                             <span class="badge bg-success">Active</span>
                         <?php endif; ?>
